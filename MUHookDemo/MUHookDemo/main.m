@@ -10,6 +10,8 @@
 #import "MUHook.h"
 #import "MUClass.h"
 
+#pragma mark - Hook 已有的类
+
 MUHImplementation(MUClass, setName, void, NSString *name) {
     NSLog(@"%s", __FUNCTION__);
     self.name = name;
@@ -20,18 +22,14 @@ MUHImplementation(MUClass, getName, NSString *) {
     return self.name;
 }
 
+void MUHInitClass(MUClass) {
+    MUHHookMessage(MUClass, getName, name2);
+    MUHHookMessage(MUClass, setName, setName2:);
+}
 
+#pragma mark - 创建已有的类的子类
 
-
-
-
-
-
-
-
-
-
-@interface MUSubclass : MUClass
+@interface MUSubclass : MUClass // 只有 interface 的 class，其实现是通过 runtime 动态创建出来的
 
 @property (nonatomic, strong) NSString *name3;
 
@@ -47,15 +45,13 @@ MUHImplementation(MUSubclass, newGetName, NSString *) {
 
 void MUHInitClass(MUSubclass) {
     MUHAllocateClass(MUClass, MUSubclass, 0);
-    MUHAddMessage(MUSubclass, @selector(setName3:), newSetName, v@:@);
-    MUHAddMessage(MUSubclass, @selector(name3), newGetName, v@:);
+    MUHAddMessage(MUSubclass, newSetName, setName3:, v@:@);
+    MUHAddMessage(MUSubclass, newGetName, name3, v@:);
     MUHRegisterClass(MUSubclass);
 }
 
 
-
-
-
+#pragma mark - 夸父类hook
 
 
 MUHImplementation(MUSubSubClass, subSetName, void, NSString *name) {
@@ -68,14 +64,15 @@ MUHImplementation(MUSubSubClass, subGetName, NSString *) {
     return MUHOrig(MUSubSubClass, subGetName);
 }
 
+void MUHInitClass(MUSubSubClass) {
+    MUHHookMessage(MUSubSubClass, subSetName, setName:);
+    MUHHookMessage(MUSubSubClass, subGetName, name);
+}
 
-
+#define Encode(argType...) [NSString stringWithType:@#argType... , nil]
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        MUHHookMessage(MUClass, @selector(setName2:), setName);
-        MUHHookMessage(MUClass, @selector(name2), getName);
-        
 //        MUClass *obj = [MUClass new];
 //        obj.name2 = @"name";
 //        NSLog(@"Name: %@", obj.name2);
@@ -85,8 +82,6 @@ int main(int argc, const char * argv[]) {
         obj.name3 = @"haha";
         NSLog(@"Name: %@", obj.name3);
         
-//        MUHHookMessage(MUSubSubClass, @selector(setName:), subSetName);
-//        MUHHookMessage(MUSubSubClass, @selector(name), subGetName);
 //        MUSubClass *obj = [MUSubClass new];
 //        obj.name = @"name";
 //        NSLog(@"Name: %@", obj.name);

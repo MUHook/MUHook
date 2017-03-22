@@ -7,7 +7,6 @@
 //
 
 #import "MUHook.h"
-#import <objc/runtime.h>
 
 void MUHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
     Method ori_method = class_getInstanceMethod(_class, sel);
@@ -30,7 +29,9 @@ void MUAddMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IM
         Method ori_method = class_getInstanceMethod(superClass, sel);
         *result = ori_method ? method_getImplementation(ori_method) : NULL;
     } else {
-        *result = NULL;
+        Method ori_method = class_getInstanceMethod(_class, sel);
+        *result = method_getImplementation(ori_method);
+        method_setImplementation(ori_method, imp);
     }
 }
 
@@ -42,3 +43,4 @@ Class MUAllocateClassPair(Class superClass, const char *className, size_t extraB
 void MURegisterClassPair(Class _class) {
     objc_registerClassPair(_class);
 }
+

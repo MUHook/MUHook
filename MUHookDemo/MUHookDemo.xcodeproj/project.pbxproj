@@ -29,8 +29,8 @@
 		6D8F55FB1E7F7BC500D34651 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6D8F56061E7F806800D34651 /* MUClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUClass.h; sourceTree = "<group>"; };
 		6D8F56071E7F806800D34651 /* MUClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUClass.m; sourceTree = "<group>"; };
-		6D8F56091E7FAA8500D34651 /* MUHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHook.h; path = ../../MUHook/MUHook.h; sourceTree = "<group>"; };
-		6D8F560A1E7FAA8500D34651 /* MUHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUHook.m; path = ../../MUHook/MUHook.m; sourceTree = "<group>"; };
+		6D8F56091E7FAA8500D34651 /* MUHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHook.h; path = ../MUHook/MUHook.h; sourceTree = SOURCE_ROOT; };
+		6D8F560A1E7FAA8500D34651 /* MUHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUHook.m; path = ../MUHook/MUHook.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
