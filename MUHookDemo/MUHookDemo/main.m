@@ -69,8 +69,6 @@ void MUHInitClass(MUSubSubClass) {
     MUHHookMessage(MUSubSubClass, subGetName, name);
 }
 
-#define Encode(argType...) [NSString stringWithType:@#argType... , nil]
-
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
 //        MUClass *obj = [MUClass new];
@@ -78,10 +76,14 @@ int main(int argc, const char * argv[]) {
 //        NSLog(@"Name: %@", obj.name2);
         
         MUHInitClass(MUSubclass);
-        MUSubclass *obj = [NSClassFromString(@"MUSubclass") new];
+        MUSubclass *obj = MUHAllocInitWith(MUSubclass, init);
         obj.name3 = @"haha";
         NSLog(@"Name: %@", obj.name3);
+        NSString *a = [MUHAlloc(NSArray) initWithObjects:@"1", nil];
         
+        MUHDefinedSend(makeString, NSString *, const char *, NSUInteger);
+        a = MUHCallMsgSend(makeString, MUHClass(NSString), stringWithCString:encoding:, "aaa", 4);
+        NSLog(@"a: %@", a);
 //        MUSubClass *obj = [MUSubClass new];
 //        obj.name = @"name";
 //        NSLog(@"Name: %@", obj.name);

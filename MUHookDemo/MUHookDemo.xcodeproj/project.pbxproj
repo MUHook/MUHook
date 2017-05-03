@@ -31,6 +31,7 @@
 		6D8F56071E7F806800D34651 /* MUClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUClass.m; sourceTree = "<group>"; };
 		6D8F56091E7FAA8500D34651 /* MUHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHook.h; path = ../MUHook/MUHook.h; sourceTree = SOURCE_ROOT; };
 		6D8F560A1E7FAA8500D34651 /* MUHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUHook.m; path = ../MUHook/MUHook.m; sourceTree = SOURCE_ROOT; };
+		6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHRuntime.h; path = ../MUHook/MUHRuntime.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +77,7 @@
 			children = (
 				6D8F56091E7FAA8500D34651 /* MUHook.h */,
 				6D8F560A1E7FAA8500D34651 /* MUHook.m */,
+				6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */,
 			);
 			path = MUHook;
 			sourceTree = "<group>";

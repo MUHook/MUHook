@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
+#import <objc/message.h>
+
+#import "MUHRuntime.h"
 
 /**
  *  Hook Usage
@@ -63,17 +66,33 @@
  *
  **/
 
+#pragma mark - Main
+
+#define MUHMain  static __attribute__((constructor)) initialize
+
+#pragma mark - Quick Statement
+
+#define MUHClassVar(c)                  _unique_class$##c
+
+#define MUHClass(c)                     NSClassFromString(@#c)
+
+#define MUHAlloc(c)                     [MUHClass(c) alloc]
+
+#define MUHAllocInitWith(c, init)       [[MUHClass(c) alloc] init]
+#define MUHFactoryWith(c, factory)      [MUHClass(c) factory]
+
 #define MUHInitClass(c) init_##c ()
 
 #pragma mark - Implementation
 
 #define MUHImplementation(c, name, returnType, args...) \
-static returnType (*_unique_ori##$##c##$##name) ( c * obj, SEL, ##args );\
-static returnType   _unique_new##$##c##$##name  ( c * self, SEL _cmd, ##args )
+static returnType (*_unique_ori$##c##$##name) ( c * obj, SEL, ##args );\
+static returnType   _unique_new$##c##$##name  ( c * self, SEL _cmd, ##args )
 
-#pragma mark - Execute Orig
+#pragma mark - Execute Orig or Super
 
-#define MUHOrig(c, name, args...) (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
+#define MUHOrig(c, name, args...)   (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
+#define MUHSuper(c, name, args...)  (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
 
 #pragma mark - Hook
 
@@ -86,7 +105,7 @@ MUHookMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##n
 
 #define MUHAddMessage(c, name, sel, encode) MUAddMessageEx(_unique_class$##c, @selector(sel), (IMP)&_unique_new$##c##$##name, #encode , (IMP*)&_unique_ori$##c##$##name)
 
-#define MUHRegisterClass(c) MURegisterClassPair(_unique_class$##c)
+#define MUHRegisterClass(c)             MURegisterClassPair(_unique_class$##c)
 
 #pragma mark - Function
 
