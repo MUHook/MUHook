@@ -74,20 +74,30 @@
 
 #define MUHClassVar(c)                  _unique_class$##c
 
-#define MUHClass(c)                     NSClassFromString(@#c)
+#define MUHClass(c)                     objc_getClass(#c)
 
 #define MUHAlloc(c)                     [MUHClass(c) alloc]
 
 #define MUHAllocInitWith(c, init)       [[MUHClass(c) alloc] init]
-#define MUHFactoryWith(c, factory)      [MUHClass(c) factory]
+#define MUHSendClassMsg(c, factory)      [MUHClass(c) factory]
+
+#define MUHGetObjectAsct(obj, name)             MUGetAsctValue(obj, #name)
+#define MUHSetObjectAsct(obj, name, value)      MUSetAsctValue(obj, #name, value)
+
+#define MUHGetSelfAsct(name)                    MUGetAsctValue(self, #name)
+#define MUHSetSelfAsct(name, value)             MUSetAsctValue(self, #name, value)
 
 #define MUHInitClass(c) init_##c ()
 
 #pragma mark - Implementation
 
-#define MUHImplementation(c, name, returnType, args...) \
+#define MUHInstanceImplementation(c, name, returnType, args...) \
 static returnType (*_unique_ori$##c##$##name) ( c * obj, SEL, ##args );\
 static returnType   _unique_new$##c##$##name  ( c * self, SEL _cmd, ##args )
+
+#define MUHClassImplementation(c, name, returnType, args...) \
+static returnType (*_unique_ori$##c##$##name) ( Class self, SEL _cmd, ##args );\
+static returnType   _unique_new$##c##$##name  ( Class self, SEL _cmd, ##args )
 
 #pragma mark - Execute Orig or Super
 
@@ -96,22 +106,34 @@ static returnType   _unique_new$##c##$##name  ( c * self, SEL _cmd, ##args )
 
 #pragma mark - Hook
 
-#define MUHHookMessage(c, name, sel) \
-MUHookMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, (IMP*)&_unique_ori$##c##$##name);
+#define MUHHookInstanceMessage(c, name, sel) \
+MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, (IMP*)&_unique_ori$##c##$##name);
+#define MUHHookClassMessage(c, name, sel) \
+MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, (IMP*)&_unique_ori$##c##$##name);
 
 #pragma mark - Create
 
-#define MUHAllocateClass(sc, c, es) Class _unique_class$##c = MUAllocateClassPair(objc_getClass( #sc ), #c , es)
+#define MUHCreateClass(c, sc) MUCreateClass(#c, #sc)
 
-#define MUHAddMessage(c, name, sel, encode) MUAddMessageEx(_unique_class$##c, @selector(sel), (IMP)&_unique_new$##c##$##name, #encode , (IMP*)&_unique_ori$##c##$##name)
+#define MUHAddInstanceMethod(c, name, sel, encode) MUAddInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, #encode , (IMP*)&_unique_ori$##c##$##name)
 
-#define MUHRegisterClass(c)             MURegisterClassPair(_unique_class$##c)
+#define MUHAddClassMethod(c, name, sel, encode) MUAddClassMessageEx(objc_getMetaClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, #encode , (IMP*)&_unique_ori$##c##$##name)
 
 #pragma mark - Function
 
-void MUHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
+Class MUCreateClass(const char *className, const char *superClass);
 
-void MUAddMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
+void MUHookInstanceMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
+
+void MUHookClassMessage(Class _class, SEL sel, IMP imp, IMP *result);
+
+void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
+
+void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
+
+id MUGetAsctValue(id obj, const char *name);
+
+void MUSetAsctValue(id obj, const char *name, id value);
 
 Class MUAllocateClassPair(Class superClass, const char *className, size_t extraBytes);
 

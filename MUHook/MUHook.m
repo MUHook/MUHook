@@ -8,7 +8,14 @@
 
 #import "MUHook.h"
 
-void MUHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
+Class MUCreateClass(const char *className, const char *superClass) {
+    Class _superClass = superClass ? objc_getClass(superClass) : objc_getClass("NSObject");
+    Class _class = objc_allocateClassPair(_superClass, className, 0);
+    objc_registerClassPair(_class);
+    return _class;
+}
+
+void MUHookInstanceMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
     Method ori_method = class_getInstanceMethod(_class, sel);
     const char *typeEncoding = method_getTypeEncoding(ori_method);
     if(!class_addMethod(_class, sel, imp, typeEncoding)) {
@@ -23,7 +30,21 @@ void MUHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
     }
 }
 
-void MUAddMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result) {
+void MUHookClassMessage(Class _class, SEL sel, IMP imp, IMP *result) {
+	MUHookInstanceMessageEx(object_getClass(_class), sel, imp, result);
+}
+
+id MUGetAsctValue(id obj, const char *name) {
+    NSString *key = [NSString stringWithUTF8String:name];
+    return objc_getAssociatedObject(obj, key.hash);
+}
+
+void MUSetAsctValue(id obj, const char *name, id value) {
+    NSString *key = [NSString stringWithUTF8String:name];
+    objc_setAssociatedObject(obj, key.hash, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result) {
     if (class_addMethod(_class, sel, imp, typeEncoding)) {
         Class superClass = class_getSuperclass(_class);
         Method ori_method = class_getInstanceMethod(superClass, sel);
@@ -33,6 +54,10 @@ void MUAddMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IM
         *result = method_getImplementation(ori_method);
         method_setImplementation(ori_method, imp);
     }
+}
+
+void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result) {
+	MUAddInstanceMessageEx(object_getClass(_class), sel, imp, typeEncoding, result);
 }
 
 Class MUAllocateClassPair(Class superClass, const char *className, size_t extraBytes) {
