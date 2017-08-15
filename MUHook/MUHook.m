@@ -30,18 +30,18 @@ void MUHookInstanceMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
     }
 }
 
-void MUHookClassMessage(Class _class, SEL sel, IMP imp, IMP *result) {
+void MUHookClassMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
 	MUHookInstanceMessageEx(object_getClass(_class), sel, imp, result);
 }
 
 id MUGetAsctValue(id obj, const char *name) {
     NSString *key = [NSString stringWithUTF8String:name];
-    return objc_getAssociatedObject(obj, key.hash);
+    return objc_getAssociatedObject(obj, (void *)key.hash);
 }
 
 void MUSetAsctValue(id obj, const char *name, id value) {
     NSString *key = [NSString stringWithUTF8String:name];
-    objc_setAssociatedObject(obj, key.hash, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(obj, (void *)key.hash, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result) {

@@ -6,84 +6,142 @@ Hook ObjC method without jailbreak.
 
 ## Feature
 
-1. Hook methods of ObjC class in binary file. Hook一个二进制文件中的类的方法
+1. Hook methods of ObjC class in binary file. Hook一个二进制文件中的类的对象方法
 2. Create subclass extends ObjC class in binary file. 创建一个二进制文件中的类的子类
+3. Create instances of the classes in binary file, 创建一个二进制文件中的类的对象
+4. Send message to class in binary file. 向二进制文件中的类发消息（工厂方法）
+
+## Usage - Fast Call 快速发消息
+
+**orig code **
+
+```objective-c
+@interface MUFastCallClass : NSObject
+
+- (instancetype)initWithInteger:(NSInteger)integer object:(id)object;
+
++ (instancetype)instanceWithInteger:(NSInteger)integer object:(id)object;
+
+@end
+```
+
+**hook code**
+
+```objective-c
+MUFastCallClass *instance = MUHAllocInitWith(MUFastCallClass, initWithInteger:1 object:[NSObject new]); // fast alloc instance
+NSObject *obj = MUHGetObjectAsct(instance, object);// fast get associated object
+MUHSetObjectAsct(instance, object, nil); // fast set associated object
+NSLog(@"%@", obj);
+```
+
+**See more: MUHookDemo/Sample-FastCall**
 
 ## Usage - Hook Method
 
-```objc
-// in UITableViewHook.m.h
+**orig code**
 
-void MUHInitClass(UITableViewController);
+```objective-c
+@interface MUHookClass : NSObject
+
++ (instancetype)instanceWithInt:(NSInteger)integer object:(id)object;
+
+- (void)voidMethodWithObject:(id)object;
+
+- (id)returnValueMethod;
+
+@end
 ```
 
-```objc
-// in UITableViewHook.m
+**hook code**
 
-// Define Hook Method -[UITableViewController tableView:cellForRowAtIndexPath:]
-MUHImplementation(UITableViewController, DataSourceCreateCell, UITableViewCell *, UITableView *tableView, NSIndexPath *indexPath) {
-	UITableViewCell *cell = MUHOrig(UITableViewController, DataSourceCreateCell, tableView, indexPath);
-	cell.backgroundColor = UIColor.whiteColor;
-	return cell;
+```objective-c
+//	Define a class method named 'factory' to hook +[MUHookClass instanceWithInt:object:]
+MUHClassImplementation(MUHookClass, factory, MUHookClass *, NSInteger integer, id object) {
+    NSLog(@"__hook__ -[MUHookClass instanceWithInt:object:]");
+    MUHookClass *instance = MUHOrig(MUHookClass, factory, integer, object);
+    return instance;
 }
 
-/* other define ... */
+//	Define an instance method named 'voidMethod' to hook
+//	-[MUHookClass voidMethodWithObject:]
+MUHInstanceImplementation(MUHookClass, voidMethod, void, id object) {
+    NSLog(@"__hook__ -[MUHookClass voidMethodWithObject:]");
+    MUHOrig(MUHookClass, voidMethod, object);
+}
 
-void MUHInitClass(UITableViewController) {
-	MUHHookMessage(UITableViewController, DataSourceCreateCell, tableView:cellForRowAtIndexPath:);
-	/* other method hook */
+//	Define an instance method named 'returnMethod' to hook
+//	-[MUHookClass returnValueMethod]
+MUHInstanceImplementation(MUHookClass, returnMethod, id) {
+    NSLog(@"__hook__ -[MUHookClass returnValueMethod]");
+    return MUHOrig(MUHookClass, returnMethod);
+}
+
+//	Execute hook
+void MUHInitClass(MUHookClass) 
+  	//	Hook class method：ClassName,MethodName,SEL
+    MUHHookClassMessage(MUHookClass, factory, instanceWithInt:object:);
+  	//	Hook instance method：ClassName,MethodName,SEL
+    MUHHookInstanceMessage(MUHookClass, voidMethod, voidMethodWithObject:);
+    MUHHookInstanceMessage(MUHookClass, returnMethod, returnValueMethod);
 }
 
 ```
 
-```objc
-// in main()
-int main() {
-	MUHInitClass(UIViewController);
-	return 0;
-}
-```
+**See more: MUHookDemo/Sample-Hook**
 
 ## Usage - Create subclass
 
-```objc
-// in .h
+**orig code**
 
-@interface MyTableViewController : UITableViewController
+```objective-c
+@interface MUExtendsSuperClass : NSObject
 
-- (NSUInteger)numberOfRowsInSection:(NSUInteger)section;
++ (instancetype)superInstanceWithInt:(NSInteger)integer object:(id)object;
+
+- (void)superVoidMethodWithObject:(id)object;
+
+- (id)superReturnValueMethod;
 
 @end
-
-void MUHInitClass(MyTableViewController);
 ```
 
-```objc
-// in .m
+**hook code**
 
-// Define Override Method -[MyTableViewController viewDidLoad]
-MUHImplementation(MyTableViewController, ViewDidLoad, void) {
-	MUHOrig(MyTableViewController, ViewDidLoad); // [super viewDidLoad];
-	self.title = @"TITLE";
+```objective-c
+//	Define a class method named 'subInstance' to override
+//	+[MUExtendsSuperClass superInstanceWithInt:object:]
+MUHClassImplementation(MUExtendsSubClass, subInstance, MUExtendsSubClass *, NSInteger integer, id object) {
+    NSLog(@"+[MUExtendsSubClass superInstanceWithInt:(NSInteger)%ld object:(id)%@]", integer, object);
+    integer += 1; // Modify arguments
+    MUExtendsSubClass *subInstancce = MUHSuper(MUExtendsSubClass, subInstance, integer, object);
+    return subInstancce;
 }
 
-// Define method -[MyTableViewController numberOfRowsInSection]
-MUHImplementation(MyTableViewController, GetSectionRow, NSUInteger, NSUInteger section) {
-	return [self.tableView numberOfRowsInSection:section];
+//	Define an instance method named 'voidMethod' to override
+//	+[MUExtendsSuperClass superVoidMethodWithObject:]
+MUHInstanceImplementation(MUExtendsSubClass, voidMethod, void, id object) {
+    NSLog(@"+[MUExtendsSubClass superVoidMethodWithObject:(id)%@]", object);
+    object = [MUExtendsSuperClass new]; // Modify arguments
+    MUHSuper(MUExtendsSubClass, voidMethod, object);
 }
 
-void MUHInitClass(UIViewController) {
-	MUHAllocateClass(UIViewController, MyViewController, 0);
-	MUHAddMessage(MyViewController, GetSectionRow, numberOfRowsInSection:, i@:i);
-	MUHAddMessage(MyViewController, ViewDidLoad, viewDidLoad, v@:);
-	MUHRegisterClass(MyViewController);
+//	Define an instance method named 'returnMethod' to override
+//	+[MUExtendsSuperClass superReturnValueMethod]
+MUHInstanceImplementation(MUExtendsSubClass, returnMethod, id) {
+    NSLog(@"+[MUExtendsSubClass superReturnValueMethod]");
+    id returnValue = MUHSuper(MUExtendsSubClass, returnMethod);
+    return returnValue;
 }
 
+void MUHInitClass(MUExtendsSubClass) {
+  	//	Create a subclass
+    MUHCreateClass(MUExtendsSubClass, MUExtendsSuperClass);
+  	//	Add class method：ClassName,MethodName,SEL,typeencoding
+    MUHAddClassMethod(MUExtendsSubClass, subInstance, superInstanceWithInt:object:, @@:q@);
+  	//	Add instance method：ClassName,MethodName,SEL,typeencoding
+    MUHAddInstanceMethod(MUExtendsSubClass, voidMethod, superVoidMethodWithObject:, v@:@);
+    MUHAddInstanceMethod(MUExtendsSubClass, returnMethod, superReturnValueMethod, @@:);
+}
 ```
 
-```objc
-// in main()
-int main() {
-	MUHInitClass(MyViewController);
-}
-```
+**See more: MUHookDemo/Sample-Extends**

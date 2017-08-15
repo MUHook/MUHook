@@ -76,10 +76,11 @@
 
 #define MUHClass(c)                     objc_getClass(#c)
 
-#define MUHAlloc(c)                     [MUHClass(c) alloc]
-
-#define MUHAllocInitWith(c, init)       [[MUHClass(c) alloc] init]
 #define MUHSendClassMsg(c, factory)      [MUHClass(c) factory]
+
+#define MUHAlloc(c)                     ((c *)[MUHClass(c) alloc])
+
+#define MUHAllocInitWith(c, init)       [MUHAlloc(c) init]
 
 #define MUHGetObjectAsct(obj, name)             MUGetAsctValue(obj, #name)
 #define MUHSetObjectAsct(obj, name, value)      MUSetAsctValue(obj, #name, value)
@@ -125,7 +126,7 @@ Class MUCreateClass(const char *className, const char *superClass);
 
 void MUHookInstanceMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 
-void MUHookClassMessage(Class _class, SEL sel, IMP imp, IMP *result);
+void MUHookClassMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 
 void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
 
