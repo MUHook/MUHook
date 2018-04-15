@@ -12,29 +12,26 @@
 #import "MUExtrendsSample.h"
 #import "MUFastCallSample.h"
 #import "MUHookSample.h"
+#import "MUHookSymbolSample.h"
 
-MUHSymbolImplementation(malloc, void *, size_t size) {
-    return NULL;
-}
-
-void MUHMain() {
-    MUHHookSymbolFunction(malloc);
-}
+#import "MUClass.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        void *point = malloc(128);
+        initMUHookSymbolSample();
         
-        printf("text malloc return value: %p\n", point);
+        MUSubClass *obj = [MUSubClass new];
+        MUHSetIvar(obj, _name, @"hahaha");
+        NSLog(@"%@", obj.name);
         
         MUHInitClass(MUExtendsSubClass);
         MUExtendsSubClass *subInstance = MUHAllocInitWith(MUExtendsSubClass, init);
         [subInstance superVoidMethodWithObject:[NSObject new]];
         [subInstance superReturnValueMethod];
-        
+
         fastCall();
-        
+
         MUHInitClass(MUHookClass);
         MUHookClass *hookInstance = MUHSendClassMsg(MUHookClass, instanceWithInt:0 object:nil);
         [hookInstance voidMethodWithObject:@"aaa"];

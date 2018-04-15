@@ -68,19 +68,17 @@
 
 #pragma mark - Main
 
-#define MUHMain  static __attribute__((constructor)) initialize
+#define MUHMain                                 static __attribute__((constructor)) initialize
 
 #pragma mark - Quick Statement
 
-#define MUHClassVar(c)                  _unique_class$##c
+#define MUHClass(c)                             objc_getClass(#c)
 
-#define MUHClass(c)                     objc_getClass(#c)
+#define MUHSendClassMsg(c, factory)             [MUHClass(c) factory]
 
-#define MUHSendClassMsg(c, factory)      [MUHClass(c) factory]
+#define MUHAlloc(c)                             ((c *)[MUHClass(c) alloc])
 
-#define MUHAlloc(c)                     ((c *)[MUHClass(c) alloc])
-
-#define MUHAllocInitWith(c, init)       [MUHAlloc(c) init]
+#define MUHAllocInitWith(c, init)               [MUHAlloc(c) init]
 
 #define MUHGetObjectAsct(obj, name)             MUGetAsctValue(obj, #name)
 #define MUHSetObjectAsct(obj, name, value)      MUSetAsctValue(obj, #name, value)
@@ -88,7 +86,13 @@
 #define MUHGetSelfAsct(name)                    MUGetAsctValue(self, #name)
 #define MUHSetSelfAsct(name, value)             MUSetAsctValue(self, #name, value)
 
-#define MUHInitClass(c) init_##c ()
+#define MUHGetIvar(obj, ivar)                   MUGetInstanceIvar(obj, #ivar)
+#define MUHSetIvar(obj, ivar, value)            MUSetInstanceIvar(obj, #ivar, value)
+
+#define MUHGetSelfIvar(ivar)                    MUGetInstanceIvar(self, #ivar)
+#define MUHSetSelfIvar(ivar, value)             MUSetInstanceIvar(self, #ivar, value)
+
+#define MUHInitClass(c)                         init_##c ()
 
 #pragma mark - Implementation
 
@@ -101,15 +105,15 @@ static returnType (*_unique_ori$##c##$##name) ( Class self, SEL _cmd, ##args );\
 static returnType   _unique_new$##c##$##name  ( Class self, SEL _cmd, ##args )
 
 #define MUHSymbolImplementation(symbol, returnType, args...) \
-static returnType (*symbol##_ori)(args);\
-static returnType   symbol##_new (args)
+static returnType (*_unique_symbol_ori$##symbol)(args);\
+static returnType   _unique_symbol_new$##symbol (args)
 
 #pragma mark - Execute Orig or Super
 
 #define MUHOrig(c, name, args...)   (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
 #define MUHSuper(c, name, args...)  (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
 
-#define MUHSymbolOrig(symbol, args...) symbol##_new(args)
+#define MUHSymbolOrig(symbol, args...) _unique_symbol_ori$##symbol(args)
 
 #pragma mark - Hook
 
@@ -119,7 +123,7 @@ MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$#
 #define MUHHookClassMessage(c, name, sel) \
 MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, (IMP*)&_unique_ori$##c##$##name);
 
-#define MUHHookSymbolFunction(symbol) rebind_symbols((struct rebinding[1]){{#symbol, symbol##_new, (void *)&symbol##_ori}}, 1)
+#define MUHHookSymbolFunction(symbol) rebind_symbols((struct rebinding[1]){{#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori$##symbol}}, 1)
 
 #pragma mark - Create
 
@@ -144,6 +148,10 @@ void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncodin
 id MUGetAsctValue(id obj, const char *name);
 
 void MUSetAsctValue(id obj, const char *name, id value);
+
+id MUGetInstanceIvar(id obj, const char *ivar);
+
+void MUSetInstanceIvar(id obj, const char *ivar, id value);
 
 Class MUAllocateClassPair(Class superClass, const char *className, size_t extraBytes);
 

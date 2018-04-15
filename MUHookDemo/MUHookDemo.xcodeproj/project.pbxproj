@@ -11,6 +11,7 @@
 		6D8F56081E7F806800D34651 /* MUClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F56071E7F806800D34651 /* MUClass.m */; };
 		6D8F560B1E7FAA8500D34651 /* MUHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F560A1E7FAA8500D34651 /* MUHook.m */; };
 		6DEEC9B32083849D006B6194 /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = 6DEEC9B22083849D006B6194 /* fishhook.c */; };
+		6DEEC9B72083ADEF006B6194 /* MUHookSymbolSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEEC9B62083ADEF006B6194 /* MUHookSymbolSample.m */; };
 		7E29B2DC1F42C1F900E1F5D6 /* MUExtendsSuperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2DB1F42C1F900E1F5D6 /* MUExtendsSuperClass.m */; };
 		7E29B2DF1F42C42400E1F5D6 /* MUExtendsSubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2DE1F42C42400E1F5D6 /* MUExtendsSubClass.m */; };
 		7E29B2E31F42C73300E1F5D6 /* MUFastCallClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2E21F42C73300E1F5D6 /* MUFastCallClass.m */; };
@@ -41,6 +42,8 @@
 		6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHRuntime.h; path = ../MUHook/MUHRuntime.h; sourceTree = SOURCE_ROOT; };
 		6DEEC9B12083849D006B6194 /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
 		6DEEC9B22083849D006B6194 /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
+		6DEEC9B52083ADEF006B6194 /* MUHookSymbolSample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookSymbolSample.h; sourceTree = "<group>"; };
+		6DEEC9B62083ADEF006B6194 /* MUHookSymbolSample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUHookSymbolSample.m; sourceTree = "<group>"; };
 		7E29B2DA1F42C1F900E1F5D6 /* MUExtendsSuperClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUExtendsSuperClass.h; sourceTree = "<group>"; };
 		7E29B2DB1F42C1F900E1F5D6 /* MUExtendsSuperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUExtendsSuperClass.m; sourceTree = "<group>"; };
 		7E29B2DD1F42C42400E1F5D6 /* MUExtendsSubClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUExtendsSubClass.h; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 				7E29B2D71F42C1B400E1F5D6 /* Sample-Extends */,
 				7E29B2D81F42C1B400E1F5D6 /* Sample-FastCall */,
 				7E29B2D91F42C1B400E1F5D6 /* Sample-Hook */,
+				6DEEC9B42083ADCC006B6194 /* Sample-Symbol */,
 				6D8F55FB1E7F7BC500D34651 /* main.m */,
 				6D8F56061E7F806800D34651 /* MUClass.h */,
 				6D8F56071E7F806800D34651 /* MUClass.m */,
@@ -106,7 +110,17 @@
 				6DEEC9B12083849D006B6194 /* fishhook.h */,
 				6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */,
 			);
-			path = MUHook;
+			name = MUHook;
+			path = ../MUHook;
+			sourceTree = "<group>";
+		};
+		6DEEC9B42083ADCC006B6194 /* Sample-Symbol */ = {
+			isa = PBXGroup;
+			children = (
+				6DEEC9B52083ADEF006B6194 /* MUHookSymbolSample.h */,
+				6DEEC9B62083ADEF006B6194 /* MUHookSymbolSample.m */,
+			);
+			path = "Sample-Symbol";
 			sourceTree = "<group>";
 		};
 		7E29B2D71F42C1B400E1F5D6 /* Sample-Extends */ = {
@@ -208,6 +222,7 @@
 				7E29B2DC1F42C1F900E1F5D6 /* MUExtendsSuperClass.m in Sources */,
 				6DEEC9B32083849D006B6194 /* fishhook.c in Sources */,
 				7E29B2E31F42C73300E1F5D6 /* MUFastCallClass.m in Sources */,
+				6DEEC9B72083ADEF006B6194 /* MUHookSymbolSample.m in Sources */,
 				6D8F55FC1E7F7BC500D34651 /* main.m in Sources */,
 				7E29B2E61F42C79E00E1F5D6 /* MUFastCallSample.m in Sources */,
 			);

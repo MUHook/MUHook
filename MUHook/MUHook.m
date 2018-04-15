@@ -69,3 +69,11 @@ void MURegisterClassPair(Class _class) {
     objc_registerClassPair(_class);
 }
 
+void MUSetInstanceIvar(id obj, const char *ivar, id value) {
+    object_setIvar(obj, class_getInstanceVariable([obj class], ivar), value);
+}
+
+id MUGetInstanceIvar(id obj, const char *ivar) {
+    return object_getIvar(obj, class_getInstanceVariable([obj class], ivar));
+}
+
