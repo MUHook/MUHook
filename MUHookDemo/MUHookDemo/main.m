@@ -13,8 +13,21 @@
 #import "MUFastCallSample.h"
 #import "MUHookSample.h"
 
+MUHSymbolImplementation(malloc, void *, size_t size) {
+    return NULL;
+}
+
+void MUHMain() {
+    MUHHookSymbolFunction(malloc);
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        
+        void *point = malloc(128);
+        
+        printf("text malloc return value: %p\n", point);
+        
         MUHInitClass(MUExtendsSubClass);
         MUExtendsSubClass *subInstance = MUHAllocInitWith(MUExtendsSubClass, init);
         [subInstance superVoidMethodWithObject:[NSObject new]];

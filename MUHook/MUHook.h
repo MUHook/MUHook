@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
-
+#import "fishhook.h"
 #import "MUHRuntime.h"
 
 /**
@@ -100,17 +100,26 @@ static returnType   _unique_new$##c##$##name  ( c * self, SEL _cmd, ##args )
 static returnType (*_unique_ori$##c##$##name) ( Class self, SEL _cmd, ##args );\
 static returnType   _unique_new$##c##$##name  ( Class self, SEL _cmd, ##args )
 
+#define MUHSymbolImplementation(symbol, returnType, args...) \
+static returnType (*symbol##_ori)(args);\
+static returnType   symbol##_new (args)
+
 #pragma mark - Execute Orig or Super
 
 #define MUHOrig(c, name, args...)   (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
 #define MUHSuper(c, name, args...)  (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
 
+#define MUHSymbolOrig(symbol, args...) symbol##_new(args)
+
 #pragma mark - Hook
 
 #define MUHHookInstanceMessage(c, name, sel) \
 MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, (IMP*)&_unique_ori$##c##$##name);
+
 #define MUHHookClassMessage(c, name, sel) \
 MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, (IMP*)&_unique_ori$##c##$##name);
+
+#define MUHHookSymbolFunction(symbol) rebind_symbols((struct rebinding[1]){{#symbol, symbol##_new, (void *)&symbol##_ori}}, 1)
 
 #pragma mark - Create
 
