@@ -11,6 +11,7 @@
 #import <objc/message.h>
 #import "fishhook.h"
 #import "MUHRuntime.h"
+#import "NSObject+MUHook.h"
 
 /**
  *  Hook Usage
@@ -81,10 +82,10 @@
 #define MUHAllocInitWith(c, init)               [MUHAlloc(c) init]
 
 #define MUHGetObjectAsct(obj, name)             MUGetAsctValue(obj, #name)
-#define MUHSetObjectAsct(obj, name, value)      MUSetAsctValue(obj, #name, value)
+#define MUHSetObjectAsct(obj, name, value, mm)  MUSetAsctValue(obj, #name, value, MUHAssosiationType_##mm)
 
 #define MUHGetSelfAsct(name)                    MUGetAsctValue(self, #name)
-#define MUHSetSelfAsct(name, value)             MUSetAsctValue(self, #name, value)
+#define MUHSetSelfAsct(name, value, mm)         MUSetAsctValue(self, #name, value, MUHAssosiationType_##mm)
 
 #define MUHGetIvar(obj, ivar)                   MUGetInstanceIvar(obj, #ivar)
 #define MUHSetIvar(obj, ivar, value)            MUSetInstanceIvar(obj, #ivar, value)
@@ -97,12 +98,12 @@
 #pragma mark - Implementation
 
 #define MUHInstanceImplementation(c, name, returnType, args...) \
-static returnType (*_unique_ori$##c##$##name) ( c * obj, SEL, ##args );\
-static returnType   _unique_new$##c##$##name  ( c * self, SEL _cmd, ##args )
+static returnType (*_unique_objc_ori$##c##$##name)   ( c * obj, SEL, ##args );\
+static returnType   _unique_objc_new$##c##$##name    ( c * self, SEL _cmd, ##args )
 
 #define MUHClassImplementation(c, name, returnType, args...) \
-static returnType (*_unique_ori$##c##$##name) ( Class self, SEL _cmd, ##args );\
-static returnType   _unique_new$##c##$##name  ( Class self, SEL _cmd, ##args )
+static returnType (*_unique_objc_ori$##c##$##name)   ( Class self, SEL _cmd, ##args );\
+static returnType   _unique_objc_new$##c##$##name    ( Class self, SEL _cmd, ##args )
 
 #define MUHSymbolImplementation(symbol, returnType, args...) \
 static returnType (*_unique_symbol_ori$##symbol)(args);\
@@ -110,18 +111,18 @@ static returnType   _unique_symbol_new$##symbol (args)
 
 #pragma mark - Execute Orig or Super
 
-#define MUHOrig(c, name, args...)   (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
-#define MUHSuper(c, name, args...)  (!_unique_ori$##c##$##name ? 0 : _unique_ori$##c##$##name (self, _cmd, ##args))
+#define MUHOrig(c, name, args...)               (!_unique_objc_ori$##c##$##name ? 0 : _unique_objc_ori$##c##$##name (self, _cmd, ##args))
+#define MUHSuper(c, name, args...)              (!_unique_objc_ori$##c##$##name ? 0 : _unique_objc_ori$##c##$##name (self, _cmd, ##args))
 
-#define MUHSymbolOrig(symbol, args...) _unique_symbol_ori$##symbol(args)
+#define MUHSymbolOrig(symbol, args...)          _unique_symbol_ori$##symbol(args)
 
 #pragma mark - Hook
 
 #define MUHHookInstanceMessage(c, name, sel) \
-MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, (IMP*)&_unique_ori$##c##$##name);
+MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
 
 #define MUHHookClassMessage(c, name, sel) \
-MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, (IMP*)&_unique_ori$##c##$##name);
+MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
 
 #define MUHHookSymbolFunction(symbol) rebind_symbols((struct rebinding[1]){{#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori$##symbol}}, 1)
 
@@ -129,9 +130,9 @@ MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c#
 
 #define MUHCreateClass(c, sc) MUCreateClass(#c, #sc)
 
-#define MUHAddInstanceMethod(c, name, sel, encode) MUAddInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, #encode , (IMP*)&_unique_ori$##c##$##name)
+#define MUHAddInstanceMethod(c, name, sel, encode) MUAddInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
 
-#define MUHAddClassMethod(c, name, sel, encode) MUAddClassMessageEx(objc_getMetaClass( #c ), @selector(sel), (IMP)&_unique_new$##c##$##name, #encode , (IMP*)&_unique_ori$##c##$##name)
+#define MUHAddClassMethod(c, name, sel, encode) MUAddClassMessageEx(objc_getMetaClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
 
 #pragma mark - Function
 
@@ -146,11 +147,9 @@ void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEnco
 void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
 
 id MUGetAsctValue(id obj, const char *name);
-
-void MUSetAsctValue(id obj, const char *name, id value);
+void MUSetAsctValue(id obj, const char *name, id value, MUHAssosiationType memory);
 
 id MUGetInstanceIvar(id obj, const char *ivar);
-
 void MUSetInstanceIvar(id obj, const char *ivar, id value);
 
 Class MUAllocateClassPair(Class superClass, const char *className, size_t extraBytes);

@@ -11,6 +11,6 @@
 void fastCall() {
     MUFastCallClass *instance = MUHAllocInitWith(MUFastCallClass, initWithInteger:1 object:[NSObject new]);
     NSObject *obj = MUHGetObjectAsct(instance, object);
-    MUHSetObjectAsct(instance, object, nil);
+    MUHSetObjectAsct(instance, object, nil, weak);
     NSLog(@"%@", obj);
 }

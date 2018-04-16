@@ -10,6 +10,7 @@
 		6D8F55FC1E7F7BC500D34651 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F55FB1E7F7BC500D34651 /* main.m */; };
 		6D8F56081E7F806800D34651 /* MUClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F56071E7F806800D34651 /* MUClass.m */; };
 		6D8F560B1E7FAA8500D34651 /* MUHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F560A1E7FAA8500D34651 /* MUHook.m */; };
+		6DCD87E5208459450061B78D /* NSObject+MUHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DCD87E4208459450061B78D /* NSObject+MUHook.m */; };
 		6DEEC9B32083849D006B6194 /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = 6DEEC9B22083849D006B6194 /* fishhook.c */; };
 		6DEEC9B72083ADEF006B6194 /* MUHookSymbolSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEEC9B62083ADEF006B6194 /* MUHookSymbolSample.m */; };
 		7E29B2DC1F42C1F900E1F5D6 /* MUExtendsSuperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2DB1F42C1F900E1F5D6 /* MUExtendsSuperClass.m */; };
@@ -40,6 +41,8 @@
 		6D8F56091E7FAA8500D34651 /* MUHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHook.h; path = ../MUHook/MUHook.h; sourceTree = SOURCE_ROOT; };
 		6D8F560A1E7FAA8500D34651 /* MUHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUHook.m; path = ../MUHook/MUHook.m; sourceTree = SOURCE_ROOT; };
 		6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHRuntime.h; path = ../MUHook/MUHRuntime.h; sourceTree = SOURCE_ROOT; };
+		6DCD87E3208459450061B78D /* NSObject+MUHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+MUHook.h"; sourceTree = "<group>"; };
+		6DCD87E4208459450061B78D /* NSObject+MUHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MUHook.m"; sourceTree = "<group>"; };
 		6DEEC9B12083849D006B6194 /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
 		6DEEC9B22083849D006B6194 /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
 		6DEEC9B52083ADEF006B6194 /* MUHookSymbolSample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookSymbolSample.h; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				6D8F560A1E7FAA8500D34651 /* MUHook.m */,
 				6DEEC9B22083849D006B6194 /* fishhook.c */,
 				6DEEC9B12083849D006B6194 /* fishhook.h */,
+				6DCD87E3208459450061B78D /* NSObject+MUHook.h */,
+				6DCD87E4208459450061B78D /* NSObject+MUHook.m */,
 				6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */,
 			);
 			name = MUHook;
@@ -216,6 +221,7 @@
 			files = (
 				7E29B2DF1F42C42400E1F5D6 /* MUExtendsSubClass.m in Sources */,
 				7E29B2E91F42CBA300E1F5D6 /* MUHookClass.m in Sources */,
+				6DCD87E5208459450061B78D /* NSObject+MUHook.m in Sources */,
 				6D8F560B1E7FAA8500D34651 /* MUHook.m in Sources */,
 				6D8F56081E7F806800D34651 /* MUClass.m in Sources */,
 				7E29B2EC1F42CBEF00E1F5D6 /* MUHookSample.m in Sources */,

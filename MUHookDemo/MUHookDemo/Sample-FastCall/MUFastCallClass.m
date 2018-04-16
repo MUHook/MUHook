@@ -14,8 +14,8 @@
 - (instancetype)initWithInteger:(NSInteger)integer object:(id)object {
     self = [super init];
     if (self) {
-        MUHSetSelfAsct(integer, @(integer));
-        MUHSetSelfAsct(object, object);
+        MUHSetSelfAsct(integer, @(integer), copy);
+        MUHSetSelfAsct(object, object, weak);
     }
     return self;
 }

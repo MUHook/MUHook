@@ -34,14 +34,12 @@ void MUHookClassMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
 	MUHookInstanceMessageEx(object_getClass(_class), sel, imp, result);
 }
 
-id MUGetAsctValue(id obj, const char *name) {
-    NSString *key = [NSString stringWithUTF8String:name];
-    return objc_getAssociatedObject(obj, (void *)key.hash);
+id MUGetAsctValue(id obj, const char*name) {
+    return [obj muh_getAssosiationForKey:[NSString stringWithUTF8String:name]];
 }
 
-void MUSetAsctValue(id obj, const char *name, id value) {
-    NSString *key = [NSString stringWithUTF8String:name];
-    objc_setAssociatedObject(obj, (void *)key.hash, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+void MUSetAsctValue(id obj, const char *name, id value, MUHAssosiationType memory) {
+    [obj muh_setAssosiationObject:value forKey:[NSString stringWithUTF8String:name] type:memory];
 }
 
 void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result) {
