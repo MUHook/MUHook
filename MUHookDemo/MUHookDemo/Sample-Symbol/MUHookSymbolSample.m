@@ -14,6 +14,12 @@ MUHSymbolImplementation(malloc, void *, size_t size) {
     return MUHSymbolOrig(malloc, size);
 }
 
+MUHSymbolImplementation(getchar, int) {
+    printf("New temp\n");
+    return MUHSymbolOrig(getchar);
+}
+
 void initMUHookSymbolSample() {
+    MUHHookSymbolFunction(getchar);
     MUHHookSymbolFunction(malloc);
 }

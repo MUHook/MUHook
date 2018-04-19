@@ -19,23 +19,26 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-//        initMUHookSymbolSample();
-//
-//        MUSubClass *obj = [MUSubClass new];
-//        MUHSetIvar(obj, _name, @"hahaha");
-//        NSLog(@"%@", obj.name);
-//
-//        MUHInitClass(MUExtendsSubClass);
-//        MUExtendsSubClass *subInstance = MUHAllocInitWith(MUExtendsSubClass, init);
-//        [subInstance superVoidMethodWithObject:[NSObject new]];
-//        [subInstance superReturnValueMethod];
-//
-//        fastCall();
-//
-//        MUHInitClass(MUHookClass);
-//        MUHookClass *hookInstance = MUHSendClassMsg(MUHookClass, instanceWithInt:0 object:nil);
-//        [hookInstance voidMethodWithObject:@"aaa"];
-//        [hookInstance returnValueMethod];
+        initMUHookSymbolSample();
+        
+        int c = getchar();
+        printf("%c\n", c);
+
+        MUSubClass *obj = [MUSubClass new];
+        MUHSetObjectIvar(obj, _name, @"hahaha");
+        NSLog(@"%@", obj.name);
+
+        MUHInitClass(MUExtendsSubClass);
+        MUExtendsSubClass *subInstance = MUHAllocInitWith(MUExtendsSubClass, init);
+        [subInstance superVoidMethodWithObject:[NSObject new]];
+        [subInstance superReturnValueMethod];
+
+        fastCall();
+
+        MUHInitClass(MUHookClass);
+        MUHookClass *hookInstance = MUHSendClassMsg(MUHookClass, instanceWithInt:0 object:nil);
+        [hookInstance voidMethodWithObject:@"aaa"];
+        [hookInstance returnValueMethod];
     }
     return 0;
 }

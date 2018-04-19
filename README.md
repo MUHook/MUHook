@@ -6,17 +6,20 @@ Hook ObjC method without jailbreak.
 
 ## Feature
 
-1. Hook methods of ObjC class in binary file. Hook一个二进制文件中的类的对象方法
-2. Create subclass extends ObjC class in binary file. 创建一个二进制文件中的类的子类
+1. Hook methods of ObjC class. Hook一个二进制文件中的类的对象方法
+2. Create subclass extends ObjC class. 创建一个二进制文件中的类的子类
 3. Create instances of the classes in binary file, 创建一个二进制文件中的类的对象
 4. Send message to class in binary file. 向二进制文件中的类发消息（工厂方法）
 
 ## Usage - Fast Call 快速发消息
 
-**orig code **
+**orig code**
 
 ```objective-c
 @interface MUFastCallClass : NSObject
+{
+	NSString *_name;
+}
 
 - (instancetype)initWithInteger:(NSInteger)integer object:(id)object;
 
@@ -32,6 +35,8 @@ MUFastCallClass *instance = MUHAllocInitWith(MUFastCallClass, initWithInteger:1 
 NSObject *obj = MUHGetObjectAsct(instance, object);// fast get associated object
 MUHSetObjectAsct(instance, object, nil); // fast set associated object
 NSLog(@"%@", obj);
+NSString *name = MUHGetObjectIvar(instance, _name);
+MUHSetObjectIvar(instance, _name, @"New Name");
 ```
 
 **See more: MUHookDemo/Sample-FastCall**
@@ -134,6 +139,11 @@ MUHInstanceImplementation(MUExtendsSubClass, returnMethod, id) {
 }
 
 void MUHInitClass(MUExtendsSubClass) {
+	/**
+	 * PS: When you call MUHCreateClass(), it will call createClass() and registerClassPair().
+	 * So you can't add any ivar to this class.
+	 * Please use association-object if you want to add propertys to the new class.
+	 */
   	//	Create a subclass
     MUHCreateClass(MUExtendsSubClass, MUExtendsSuperClass);
   	//	Add class method：ClassName,MethodName,SEL,typeencoding
@@ -145,3 +155,25 @@ void MUHInitClass(MUExtendsSubClass) {
 ```
 
 **See more: MUHookDemo/Sample-Extends**
+
+## Usage - Hook Symbol function (Power by fishhook)
+
+```objc
+// Define function to hook malloc()
+MUHSymbolImplementation(malloc, void *, size_t size) {
+    printf("malloc(%lu)\n", size);
+    return MUHSymbolOrig(malloc, size);
+}
+
+// Define function to hook getchar()
+MUHSymbolImplementation(getchar, int) {
+    printf("New temp\n");
+    return MUHSymbolOrig(getchar);
+}
+
+void initMUHookSymbolSample() {
+    MUHHookSymbolFunction(getchar);
+    MUHHookSymbolFunction(malloc);
+}
+
+```

@@ -87,8 +87,8 @@
 #define MUHGetSelfAsct(name)                    MUGetAsctValue(self, #name)
 #define MUHSetSelfAsct(name, value, mm)         MUSetAsctValue(self, #name, value, MUHAssosiationType_##mm)
 
-#define MUHGetIvar(obj, ivar)                   MUGetInstanceIvar(obj, #ivar)
-#define MUHSetIvar(obj, ivar, value)            MUSetInstanceIvar(obj, #ivar, value)
+#define MUHGetObjectIvar(obj, ivar)             MUGetInstanceIvar(obj, #ivar)
+#define MUHSetObjectIvar(obj, ivar, value)      MUSetInstanceIvar(obj, #ivar, value)
 
 #define MUHGetSelfIvar(ivar)                    MUGetInstanceIvar(self, #ivar)
 #define MUHSetSelfIvar(ivar, value)             MUSetInstanceIvar(self, #ivar, value)
