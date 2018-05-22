@@ -1,8 +1,8 @@
 # MUHook
 
-Hook ObjC method without jailbreak.
+A **powerful**, **quickly**, **light-weight** hooking tool on iOS device without jailbreak.
 
-非越狱环境 hook 工具。
+在非越狱 iOS 平台上的强大的、快速的、轻量级 Hook 工具。
 
 ## Feature
 
@@ -10,10 +10,11 @@ Hook ObjC method without jailbreak.
 2. Create subclass extends ObjC class. 创建一个二进制文件中的类的子类
 3. Create instances of the classes in binary file, 创建一个二进制文件中的类的对象
 4. Send message to class in binary file. 向二进制文件中的类发消息（工厂方法）
+5. Support code hinting in Xcode.	支持 Xcode 的代码提示
 
 ## Usage - Fast Call 快速发消息
 
-**orig code**
+**orig code 原代码**
 
 ```objective-c
 @interface MUFastCallClass : NSObject
@@ -28,22 +29,35 @@ Hook ObjC method without jailbreak.
 @end
 ```
 
-**hook code**
+**hook code 插件代码**
 
 ```objective-c
-MUFastCallClass *instance = MUHAllocInitWith(MUFastCallClass, initWithInteger:1 object:[NSObject new]); // fast alloc instance
-NSObject *obj = MUHGetObjectAsct(instance, object);// fast get associated object
-MUHSetObjectAsct(instance, object, nil); // fast set associated object
-NSLog(@"%@", obj);
+//	Alloc an instance without linking.
+//	创建一个对象，如果直接 [[Class alloc] init] 调用，编译时候报 link 错误
+MUFastCallClass *instance = MUHAllocInitWith(MUFastCallClass, initWithInteger:1 object:[NSObject new]);
+
+//	Get associated object
+//	取关联对象
+NSObject *obj = MUHGetObjectAsct(instance, object);
+
+//	Set associated object, supporting: strong/weak/assign/copy
+//	设置关联对象，最后一个值支持: strong、weak、assign、copy
+MUHSetObjectAsct(instance, object, nil, strong);
+
+//	Get ivar value
+//	取实例变量
 NSString *name = MUHGetObjectIvar(instance, _name);
+
+//	Set ivar value
+//	设置实例变量
 MUHSetObjectIvar(instance, _name, @"New Name");
 ```
 
 **See more: MUHookDemo/Sample-FastCall**
 
-## Usage - Hook Method
+## Usage - Hook Method 勾住方法
 
-**orig code**
+**orig code 原代码**
 
 ```objective-c
 @interface MUHookClass : NSObject
@@ -57,10 +71,11 @@ MUHSetObjectIvar(instance, _name, @"New Name");
 @end
 ```
 
-**hook code**
+**hook code 插件代码**
 
 ```objective-c
 //	Define a class method named 'factory' to hook +[MUHookClass instanceWithInt:object:]
+//	定义一个新的类方法实现体，称之'factory'（该名称只要自己保证类内唯一性即可）
 MUHClassImplementation(MUHookClass, factory, MUHookClass *, NSInteger integer, id object) {
     NSLog(@"__hook__ -[MUHookClass instanceWithInt:object:]");
     MUHookClass *instance = MUHOrig(MUHookClass, factory, integer, object);
@@ -69,6 +84,7 @@ MUHClassImplementation(MUHookClass, factory, MUHookClass *, NSInteger integer, i
 
 //	Define an instance method named 'voidMethod' to hook
 //	-[MUHookClass voidMethodWithObject:]
+//	定义一个新的带参数、无返回值的实例方法实现体
 MUHInstanceImplementation(MUHookClass, voidMethod, void, id object) {
     NSLog(@"__hook__ -[MUHookClass voidMethodWithObject:]");
     MUHOrig(MUHookClass, voidMethod, object);
@@ -76,27 +92,43 @@ MUHInstanceImplementation(MUHookClass, voidMethod, void, id object) {
 
 //	Define an instance method named 'returnMethod' to hook
 //	-[MUHookClass returnValueMethod]
+//	定义一个新的带返回值，无参数的实例方法体
 MUHInstanceImplementation(MUHookClass, returnMethod, id) {
     NSLog(@"__hook__ -[MUHookClass returnValueMethod]");
     return MUHOrig(MUHookClass, returnMethod);
 }
 
 //	Execute hook
+//	You need call the function MUHInitClass() in MUHMain()
+//	执行 Hook
+//	请在 MUHMain() 中手动调用该函数以生效以上 hook
 void MUHInitClass(MUHookClass) 
   	//	Hook class method：ClassName,MethodName,SEL
+  	//	参数列表：类名，自己取得方法名（与上面的方法体相同），SEL
     MUHHookClassMessage(MUHookClass, factory, instanceWithInt:object:);
   	//	Hook instance method：ClassName,MethodName,SEL
+  	//	参数列表：类名，自己取得方法名（与上面的方法体相同），SEL
     MUHHookInstanceMessage(MUHookClass, voidMethod, voidMethodWithObject:);
     MUHHookInstanceMessage(MUHookClass, returnMethod, returnValueMethod);
+}
+
+//	In the other files(such as: Main.m).
+//	Create an entry function to excute all hook.
+//	在某个文件中（如 Main.m）
+//	创建一个 MUHMain() 函数，来执行以上所有类的 Hook。
+void MUHMain() {
+	MUHInitClass(MUHookClass);
+	MUHInitClass(...);
+	...
 }
 
 ```
 
 **See more: MUHookDemo/Sample-Hook**
 
-## Usage - Create subclass
+## Usage - Create subclass 创建子类
 
-**orig code**
+**orig code 原父类代码**
 
 ```objective-c
 @interface MUExtendsSuperClass : NSObject
@@ -110,7 +142,7 @@ void MUHInitClass(MUHookClass)
 @end
 ```
 
-**hook code**
+**hook code 插件子类代码**
 
 ```objective-c
 //	Define a class method named 'subInstance' to override
@@ -143,6 +175,10 @@ void MUHInitClass(MUExtendsSubClass) {
 	 * PS: When you call MUHCreateClass(), it will call createClass() and registerClassPair().
 	 * So you can't add any ivar to this class.
 	 * Please use association-object if you want to add propertys to the new class.
+	 * 
+	 * 注意：当你调用 MUHCreateClass()，会自动调用 createClass() 和 registerClassPair() 函数。
+	 * 所以你不能自定义添加实例变量到新的子类中
+	 * 如果你需要定义属性，请使用关联对象
 	 */
   	//	Create a subclass
     MUHCreateClass(MUExtendsSubClass, MUExtendsSuperClass);
@@ -156,21 +192,27 @@ void MUHInitClass(MUExtendsSubClass) {
 
 **See more: MUHookDemo/Sample-Extends**
 
-## Usage - Hook Symbol function (Power by fishhook)
+## Usage - Hook Symbol function 符号函数 (Power by fishhook) 
 
 ```objc
 // Define function to hook malloc()
+//	定义一个新的 malloc 函数实现体
 MUHSymbolImplementation(malloc, void *, size_t size) {
     printf("malloc(%lu)\n", size);
     return MUHSymbolOrig(malloc, size);
 }
 
 // Define function to hook getchar()
+//	定义一个新的 getchar 函数实现体
 MUHSymbolImplementation(getchar, int) {
     printf("New temp\n");
     return MUHSymbolOrig(getchar);
 }
 
+//	Hook functions.
+//	You need call the function in MUHMain().
+//	执行本文件的模块 hook
+//	该函数需要在 MUHMain() 中被调用，以上实现才生效
 void initMUHookSymbolSample() {
     MUHHookSymbolFunction(getchar);
     MUHHookSymbolFunction(malloc);

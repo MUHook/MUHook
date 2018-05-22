@@ -13,67 +13,13 @@
 #import "MUHRuntime.h"
 #import "NSObject+MUHook.h"
 
-/**
- *  Hook Usage
- *
- *  In .h file:
- *
- *  void MUHInitClass(MUTableViewController);
- *
- *  In .m file:
- *
- *  MUHHookImplementation(MUTableViewController, cellForRowAtIndexPath, UITableViewCell *, UITableView *tableView, NSIndexPath *indexPath) {
- *      UITableViewCell *cell = MUHOrig(MUTableViewController, cellForRowAtIndexPath, UITableView *tableView, NSIndexPath *indexPath);
- *      // some code to modify cell
- *      return cell;
- *  }
- *
- *  void MUHInitClass(MUTableViewController) {
- *      MUHookMessageEx(MUTableViewController, @selector(tableView:cellForRowAtIndexPath:), cellForRowAtIndexPath);
- *  }
- *
- *  In main():
- *
- *  MUHInitClass(MUTableViewController);
- *
- **/
-
-
-/**
- *  Create Usage
- *
- *  In .h file:
- *
- *  void MUHInitClass(MUTableViewController);
- *
- *  In .m file:
- *
- *  MUHHookImplementation(MUTableViewController, cellForRowAtIndexPath, UITableViewCell *, UITableView *tableView, NSIndexPath *indexPath) {
- *      UITableViewCell *cell = MUHOrig(MUTableViewController, cellForRowAtIndexPath, UITableView *tableView, NSIndexPath *indexPath);
- *      // some code to modify cell
- *      return cell;
- *  }
- *
- *  void MUHInitClass(MUTableViewController) {
- *      MUHAllocateClass(UIViewController, MUTableViewController, 0);
- *      MUHAddMessage(MUTableViewController, @selector(tableView:cellForRowAtIndexPath:), cellForRowAtIndexPath, @@:@@);
- *      ...
- *      MUHRegisterClass(MUTableViewController);
- *  }
- *
- *  In main():
- *
- *  MUHInitClass(MUTableViewController);
- *
- **/
-
 #pragma mark - Main
 
 #define MUHMain                                 static __attribute__((constructor)) initialize
 
 #pragma mark - Quick Statement
 
-#define MUHClass(c)                             objc_getClass(#c)
+#define MUHClass(c)                             ((Class)(((c *)0x0)?Nil:objc_getClass(#c)))
 
 #define MUHSendClassMsg(c, factory)             [MUHClass(c) factory]
 
@@ -98,12 +44,12 @@
 #pragma mark - Implementation
 
 #define MUHInstanceImplementation(c, name, returnType, args...) \
-static returnType (*_unique_objc_ori$##c##$##name)   ( c * obj, SEL, ##args );\
+static returnType (*_unique_objc_ori$##c##$##name)   ( c * self, SEL _cmd, ##args );\
 static returnType   _unique_objc_new$##c##$##name    ( c * self, SEL _cmd, ##args )
 
 #define MUHClassImplementation(c, name, returnType, args...) \
-static returnType (*_unique_objc_ori$##c##$##name)   ( Class self, SEL _cmd, ##args );\
-static returnType   _unique_objc_new$##c##$##name    ( Class self, SEL _cmd, ##args )
+static returnType (*_unique_objc_ori$##c##$##name)   ( __strong const Class self, SEL _cmd, ##args );\
+static returnType   _unique_objc_new$##c##$##name    ( __strong const Class self, SEL _cmd, ##args )
 
 #define MUHSymbolImplementation(symbol, returnType, args...) \
 static returnType (*_unique_symbol_ori$##symbol)(args);\
@@ -111,28 +57,31 @@ static returnType   _unique_symbol_new$##symbol (args)
 
 #pragma mark - Execute Orig or Super
 
-#define MUHOrig(c, name, args...)               (!_unique_objc_ori$##c##$##name ? 0 : _unique_objc_ori$##c##$##name (self, _cmd, ##args))
-#define MUHSuper(c, name, args...)              (!_unique_objc_ori$##c##$##name ? 0 : _unique_objc_ori$##c##$##name (self, _cmd, ##args))
+#define MUHOrig(c, name, args...)               (((c *)0x0)?0:(!_unique_objc_ori$##c##$##name?0:_unique_objc_ori$##c##$##name (self, _cmd, ##args)))
+#define MUHSuper(c, name, args...)              (((c *)0x0)?0:(!_unique_objc_ori$##c##$##name?0:_unique_objc_ori$##c##$##name (self, _cmd, ##args)))
 
 #define MUHSymbolOrig(symbol, args...)          _unique_symbol_ori$##symbol(args)
 
 #pragma mark - Hook
 
 #define MUHHookInstanceMessage(c, name, sel) \
-MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
+{(c *)0x0;}MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
 
 #define MUHHookClassMessage(c, name, sel) \
-MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
+{(c *)0x0;}MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
 
-#define MUHHookSymbolFunction(symbol) rebind_symbols((struct rebinding[1]){{#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori$##symbol}}, 1)
+#define MUHHookSymbolFunction(symbol) \
+rebind_symbols((struct rebinding[1]){{#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori$##symbol}}, 1)
 
 #pragma mark - Create
 
-#define MUHCreateClass(c, sc) MUCreateClass(#c, #sc)
+#define MUHCreateClass(c, sc) {(c *)0x0;(sc *)0x0;}MUCreateClass(#c, #sc)
 
-#define MUHAddInstanceMethod(c, name, sel, encode) MUAddInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
+#define MUHAddInstanceMethod(c, name, sel, encode) \
+{(c *)0x0;}MUAddInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
 
-#define MUHAddClassMethod(c, name, sel, encode) MUAddClassMessageEx(objc_getMetaClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
+#define MUHAddClassMethod(c, name, sel, encode) \
+{(c *)0x0;}MUAddClassMessageEx(objc_getMetaClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
 
 #pragma mark - Function
 
