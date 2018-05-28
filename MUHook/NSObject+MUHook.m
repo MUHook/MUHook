@@ -9,7 +9,7 @@
 #import "NSObject+MUHook.h"
 #import <objc/runtime.h>
 
-typedef id(^PackageBlock)();
+typedef id(^PackageBlock)(void);
 
 @implementation NSObject (MUHook)
 
