@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
-#import "fishhook.h"
 #import "MUHRuntime.h"
 #import "NSObject+MUHook.h"
 
@@ -71,7 +70,7 @@ static returnType   _unique_symbol_new$##symbol (args)
 {(c *)0x0;}MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
 
 #define MUHHookSymbolFunction(symbol) \
-rebind_symbols((struct rebinding[1]){{#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori$##symbol}}, 1)
+MURebindSymbol(#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori$##symbol)
 
 #pragma mark - Create
 
@@ -104,3 +103,5 @@ void MUSetInstanceIvar(id obj, const char *ivar, id value);
 Class MUAllocateClassPair(Class superClass, const char *className, size_t extraBytes);
 
 void MURegisterClassPair(Class _class);
+
+int MURebindSymbol(const char *symbol, void *imp, void **result);

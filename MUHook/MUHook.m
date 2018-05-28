@@ -7,6 +7,7 @@
 //
 
 #import "MUHook.h"
+#import "fishhook.h"
 
 Class MUCreateClass(const char *className, const char *superClass) {
     Class _superClass = superClass ? objc_getClass(superClass) : objc_getClass("NSObject");
@@ -75,3 +76,6 @@ id MUGetInstanceIvar(id obj, const char *ivar) {
     return object_getIvar(obj, class_getInstanceVariable([obj class], ivar));
 }
 
+int MURebindSymbol(const char *symbol, void *imp, void **result) {
+    return rebind_symbols((struct rebinding[1]){{symbol, imp, (void *)result}}, 1);
+}
