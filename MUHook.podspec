@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "MUHook"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "A powerful, quickly, light-weight hooking tool on iOS device without jailbreak."
 
   # This description is used to generate tags and improve search results.
