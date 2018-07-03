@@ -18,7 +18,7 @@
 
 #pragma mark - Quick Statement
 
-#define MUHClass(c)                             ((Class)(((c *)0x0)?Nil:objc_getClass(#c)))
+#define MUHClass(c)                             ((Class)(((c *)0x0), objc_getClass(#c)))
 
 #define MUHSendClassMsg(c, factory)             [MUHClass(c) factory]
 
@@ -56,8 +56,8 @@ static returnType   _unique_symbol_new$##symbol (args)
 
 #pragma mark - Execute Orig or Super
 
-#define MUHOrig(c, name, args...)               (((c *)0x0)?0:(!_unique_objc_ori$##c##$##name?0:_unique_objc_ori$##c##$##name (self, _cmd, ##args)))
-#define MUHSuper(c, name, args...)              (((c *)0x0)?0:(!_unique_objc_ori$##c##$##name?0:_unique_objc_ori$##c##$##name (self, _cmd, ##args)))
+#define MUHOrig(c, name, args...)               (((c *)0x0),(!_unique_objc_ori$##c##$##name?0:_unique_objc_ori$##c##$##name (self, _cmd, ##args)))
+#define MUHSuper(c, name, args...)              (((c *)0x0),(!_unique_objc_ori$##c##$##name?0:_unique_objc_ori$##c##$##name (self, _cmd, ##args)))
 
 #define MUHSymbolOrig(symbol, args...)          _unique_symbol_ori$##symbol(args)
 

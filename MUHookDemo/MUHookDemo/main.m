@@ -19,7 +19,7 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        initMUHookSymbolSample();
+//        initMUHookSymbolSample();
         
         int c = getchar();
         printf("%c\n", c);
@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
         MUSubClass *obj = [MUSubClass new];
         MUHSetObjectIvar(obj, _name, @"hahaha");
         NSLog(@"%@", obj.name);
-
+        
         MUHInitClass(MUExtendsSubClass);
         MUExtendsSubClass *subInstance = MUHAllocInitWith(MUExtendsSubClass, init);
         [subInstance superVoidMethodWithObject:[NSObject new]];
