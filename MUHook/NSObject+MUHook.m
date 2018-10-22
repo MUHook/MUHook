@@ -51,7 +51,11 @@ typedef id(^PackageBlock)(void);
 
 - (id)muh_getAssosiationForKey:(NSString *)key {
     PackageBlock block = objc_getAssociatedObject(self, (const void *)key.hash);
-    return block();
+    if (block) {
+        return block();
+    } else {
+        return nil;
+    }
 }
 
 @end
