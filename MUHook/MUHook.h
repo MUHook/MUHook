@@ -11,6 +11,7 @@
 #import <objc/message.h>
 #import "MUHRuntime.h"
 #import "NSObject+MUHook.h"
+#import "MUHMember.h"
 
 #pragma mark - Main
 
@@ -25,18 +26,6 @@
 #define MUHAlloc(c)                             ((c *)[MUHClass(c) alloc])
 
 #define MUHAllocInitWith(c, init)               [MUHAlloc(c) init]
-
-#define MUHGetObjectAsct(obj, name)             MUGetAsctValue(obj, #name)
-#define MUHSetObjectAsct(obj, name, value, mm)  MUSetAsctValue(obj, #name, value, MUHAssosiationType_##mm)
-
-#define MUHGetSelfAsct(name)                    MUGetAsctValue(self, #name)
-#define MUHSetSelfAsct(name, value, mm)         MUSetAsctValue(self, #name, value, MUHAssosiationType_##mm)
-
-#define MUHGetObjectIvar(obj, ivar)             MUGetInstanceIvar(obj, #ivar)
-#define MUHSetObjectIvar(obj, ivar, value)      MUSetInstanceIvar(obj, #ivar, value)
-
-#define MUHGetSelfIvar(ivar)                    MUGetInstanceIvar(self, #ivar)
-#define MUHSetSelfIvar(ivar, value)             MUSetInstanceIvar(self, #ivar, value)
 
 #define MUHInitClass(c)                         init_##c ()
 
@@ -93,12 +82,6 @@ void MUHookClassMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
 
 void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
-
-id MUGetAsctValue(id obj, const char *name);
-void MUSetAsctValue(id obj, const char *name, id value, MUHAssosiationType memory);
-
-id MUGetInstanceIvar(id obj, const char *ivar);
-void MUSetInstanceIvar(id obj, const char *ivar, id value);
 
 Class MUAllocateClassPair(Class superClass, const char *className, size_t extraBytes);
 

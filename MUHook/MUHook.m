@@ -35,14 +35,6 @@ void MUHookClassMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
 	MUHookInstanceMessageEx(object_getClass(_class), sel, imp, result);
 }
 
-id MUGetAsctValue(id obj, const char*name) {
-    return [obj muh_getAssosiationForKey:[NSString stringWithUTF8String:name]];
-}
-
-void MUSetAsctValue(id obj, const char *name, id value, MUHAssosiationType memory) {
-    [obj muh_setAssosiationObject:value forKey:[NSString stringWithUTF8String:name] type:memory];
-}
-
 void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result) {
     if (class_addMethod(_class, sel, imp, typeEncoding)) {
         Class superClass = class_getSuperclass(_class);
@@ -66,14 +58,6 @@ Class MUAllocateClassPair(Class superClass, const char *className, size_t extraB
 
 void MURegisterClassPair(Class _class) {
     objc_registerClassPair(_class);
-}
-
-void MUSetInstanceIvar(id obj, const char *ivar, id value) {
-    object_setIvar(obj, class_getInstanceVariable([obj class], ivar), value);
-}
-
-id MUGetInstanceIvar(id obj, const char *ivar) {
-    return object_getIvar(obj, class_getInstanceVariable([obj class], ivar));
 }
 
 int MURebindSymbol(const char *symbol, void *imp, void **result) {

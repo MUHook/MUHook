@@ -4,13 +4,31 @@ A **powerful**, **quickly**, **light-weight** hooking tool on iOS device without
 
 在非越狱 iOS 平台上的强大的、快速的、轻量级 Hook 工具。
 
-## Feature
+## Feature 功能
 
 1. Hook methods of ObjC class. Hook一个二进制文件中的类的对象方法
 2. Create subclass extends ObjC class. 创建一个二进制文件中的类的子类
 3. Create instances of the classes in binary file, 创建一个二进制文件中的类的对象
 4. Send message to class in binary file. 向二进制文件中的类发消息（工厂方法）
 5. Support code hinting in Xcode.	支持 Xcode 的代码提示
+
+## Installation 使用
+
+**CocoaPods**
+
+```ruby
+pod 'MUHook'
+```
+
+**Source**
+
+Drag *MUHook*、*fishhook* folder to your project
+
+**Import**
+
+```objc
+#import <MUHook/MUHook.h>
+```
 
 ## Usage - Fast Call 快速发消息
 
@@ -38,19 +56,19 @@ MUFastCallClass *instance = MUHAllocInitWith(MUFastCallClass, initWithInteger:1 
 
 //	Get associated object
 //	取关联对象
-NSObject *obj = MUHGetObjectAsct(instance, object);
+NSObject *obj = MUHAsct(instance, object, strong);
 
 //	Set associated object, supporting: strong/weak/assign/copy
 //	设置关联对象，最后一个值支持: strong、weak、assign、copy
-MUHSetObjectAsct(instance, object, nil, strong);
+MUHAsct(instance, object, strong) = nil;
 
 //	Get ivar value
 //	取实例变量
-NSString *name = MUHGetObjectIvar(instance, _name);
+NSString *name = MUHIvar(instance, _name);
 
 //	Set ivar value
 //	设置实例变量
-MUHSetObjectIvar(instance, _name, @"New Name");
+MUHIvar(instance, _name) = @"New Name";
 ```
 
 **See more: MUHookDemo/Sample-FastCall**

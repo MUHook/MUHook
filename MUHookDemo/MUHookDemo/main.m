@@ -21,12 +21,12 @@ int main(int argc, const char * argv[]) {
         
 //        initMUHookSymbolSample();
         
-        int c = getchar();
-        printf("%c\n", c);
+//        int c = getchar();
+//        printf("%c\n", c);
 
         MUSubClass *obj = [MUSubClass new];
-        MUHSetObjectIvar(obj, _name, @"hahaha");
-        NSLog(@"%@", obj.name);
+        MUHAsct(obj, name, strong) = @"hh";
+        NSLog(@"%@", MUHAsct(obj, name, strong));
         
         MUHInitClass(MUExtendsSubClass);
         MUExtendsSubClass *subInstance = MUHAllocInitWith(MUExtendsSubClass, init);

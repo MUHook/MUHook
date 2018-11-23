@@ -15,6 +15,14 @@ typedef NS_ENUM(NSUInteger, MUHAssosiationType) {
     MUHAssosiationType_weak,
 };
 
+#define _MUHAsctType(mm) ({\
+__unused MUHAssosiationType strong = MUHAssosiationType_strong;\
+__unused MUHAssosiationType assign = MUHAssosiationType_assign;\
+__unused MUHAssosiationType copy = MUHAssosiationType_copy;\
+__unused MUHAssosiationType weak = MUHAssosiationType_weak;\
+mm;\
+})
+
 @interface NSObject (MUHook)
 
 - (void)muh_setAssosiationObject:(id)object forKey:(NSString *)key type:(MUHAssosiationType)type;
