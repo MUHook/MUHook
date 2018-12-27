@@ -20,6 +20,8 @@
 		7E29B2E61F42C79E00E1F5D6 /* MUFastCallSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2E51F42C79E00E1F5D6 /* MUFastCallSample.m */; };
 		7E29B2E91F42CBA300E1F5D6 /* MUHookClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2E81F42CBA300E1F5D6 /* MUHookClass.m */; };
 		7E29B2EC1F42CBEF00E1F5D6 /* MUHookSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2EB1F42CBEF00E1F5D6 /* MUHookSample.m */; };
+		7E31AC9021D4731300AAF3F8 /* MUHookDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E31AC8F21D4731300AAF3F8 /* MUHookDebug.m */; };
+		7E31AC9321D4731F00AAF3F8 /* MUHookRelease.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +65,10 @@
 		7E29B2E81F42CBA300E1F5D6 /* MUHookClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUHookClass.m; sourceTree = "<group>"; };
 		7E29B2EA1F42CBEF00E1F5D6 /* MUHookSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUHookSample.h; sourceTree = "<group>"; };
 		7E29B2EB1F42CBEF00E1F5D6 /* MUHookSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUHookSample.m; sourceTree = "<group>"; };
+		7E31AC8E21D4731300AAF3F8 /* MUHookDebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookDebug.h; sourceTree = "<group>"; };
+		7E31AC8F21D4731300AAF3F8 /* MUHookDebug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUHookDebug.m; sourceTree = "<group>"; };
+		7E31AC9121D4731F00AAF3F8 /* MUHookRelease.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookRelease.h; sourceTree = "<group>"; };
+		7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUHookRelease.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,10 @@
 			children = (
 				6D8F56091E7FAA8500D34651 /* MUHook.h */,
 				6D8F560A1E7FAA8500D34651 /* MUHook.m */,
+				7E31AC8E21D4731300AAF3F8 /* MUHookDebug.h */,
+				7E31AC8F21D4731300AAF3F8 /* MUHookDebug.m */,
+				7E31AC9121D4731F00AAF3F8 /* MUHookRelease.h */,
+				7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */,
 				7E2735DD21A855F000971EE6 /* MUHMember.h */,
 				7E2735DE21A855F000971EE6 /* MUHMember.m */,
 				6DCD87E3208459450061B78D /* NSObject+MUHook.h */,
@@ -239,12 +249,14 @@
 				7E2735DF21A855F000971EE6 /* MUHMember.m in Sources */,
 				6D8F560B1E7FAA8500D34651 /* MUHook.m in Sources */,
 				6D8F56081E7F806800D34651 /* MUClass.m in Sources */,
+				7E31AC9021D4731300AAF3F8 /* MUHookDebug.m in Sources */,
 				7E29B2EC1F42CBEF00E1F5D6 /* MUHookSample.m in Sources */,
 				7E29B2DC1F42C1F900E1F5D6 /* MUExtendsSuperClass.m in Sources */,
 				7E29B2E31F42C73300E1F5D6 /* MUFastCallClass.m in Sources */,
 				6DEEC9B72083ADEF006B6194 /* MUHookSymbolSample.m in Sources */,
 				6D8F55FC1E7F7BC500D34651 /* main.m in Sources */,
 				7E114D7020BC06EC0083DB24 /* fishhook.c in Sources */,
+				7E31AC9321D4731F00AAF3F8 /* MUHookRelease.m in Sources */,
 				7E29B2E61F42C79E00E1F5D6 /* MUFastCallSample.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

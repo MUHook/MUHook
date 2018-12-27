@@ -1,9 +1,9 @@
 //
 //  MUHook.m
 //
-//  Created by Shuang Wu on 2017/2/9.
+//  Created by Magic-Unique on 2017/2/9.
 //
-//  Copyright Shuang Wu 2017
+//  Copyright Magic-Unique 2017
 //
 
 #import "MUHook.h"

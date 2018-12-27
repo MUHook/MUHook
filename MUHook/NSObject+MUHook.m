@@ -2,7 +2,7 @@
 //  NSObject+MUHook.m
 //  MUHookDemo
 //
-//  Created by 吴双 on 2018/4/16.
+//  Created by Magic-Unique on 2018/4/16.
 //  Copyright © 2018年 unique. All rights reserved.
 //
 

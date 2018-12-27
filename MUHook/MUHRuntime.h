@@ -2,7 +2,7 @@
 //  MUHRuntime.h
 //  MUHookDemo
 //
-//  Created by Shuang Wu on 2017/3/30.
+//  Created by Magic-Unique on 2017/3/30.
 //  Copyright © 2017年 unique. All rights reserved.
 //
 

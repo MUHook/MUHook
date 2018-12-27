@@ -2,7 +2,7 @@
 //  main.m
 //  MUHookDemo
 //
-//  Created by Shuang Wu on 2017/3/20.
+//  Created by Magic-Unique on 2017/3/20.
 //  Copyright © 2017年 unique. All rights reserved.
 //
 
