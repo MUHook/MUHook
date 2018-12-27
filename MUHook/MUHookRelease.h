@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#if DEBUG == 1
+#else
+
 #pragma mark - Main
 
 #define MUHMain                                 static __attribute__((constructor)) initialize
@@ -66,3 +69,4 @@ MUAddInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_n
 #define MUHAddClassMethod(c, name, sel, encode) \
 MUAddClassMessageEx(objc_getMetaClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
 
+#endif

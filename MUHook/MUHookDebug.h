@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#if DEBUG == 1
+
 #pragma mark - Main
 
 #define MUHMain                                 static __attribute__((constructor)) initialize
@@ -70,3 +72,4 @@ __unused static returnType   _unique_symbol_new$##symbol (args)
 #define MUHAddClassMethod(c, name, sel, encode) \
 {(c *)0x0;(void)name;}MUAddClassMessageEx(objc_getMetaClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
 
+#endif
