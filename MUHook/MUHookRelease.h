@@ -21,7 +21,7 @@
 
 #define MUHSendClassMsg(c, factory)             [MUHClass(c) factory]
 
-#define MUHAlloc(c)                             [MUHClass(c) alloc]
+#define MUHAlloc(c)                             ((c *)[MUHClass(c) alloc])
 
 #define MUHAllocInitWith(c, init)               [MUHAlloc(c) init]
 
