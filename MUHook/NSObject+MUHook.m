@@ -46,7 +46,7 @@ typedef id(^PackageBlock)(void);
         default:
             break;
     }
-    objc_setAssociatedObject(self, (const void *)key.hash, block, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, (const void *)key.hash, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (id)muh_getAssosiationForKey:(NSString *)key {
