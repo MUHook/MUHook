@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, MUHAssosiationType) {
-    MUHAssosiationType_strong,
-    MUHAssosiationType_assign,
-    MUHAssosiationType_copy,
-    MUHAssosiationType_weak,
+    MUHAssosiationTypeStrong,
+    MUHAssosiationTypeAssign,
+    MUHAssosiationTypeCopy,
+    MUHAssosiationTypeWeak,
 };
 
 #define _MUHAsctType(mm) ({\
-__unused MUHAssosiationType strong = MUHAssosiationType_strong;\
-__unused MUHAssosiationType assign = MUHAssosiationType_assign;\
-__unused MUHAssosiationType copy = MUHAssosiationType_copy;\
-__unused MUHAssosiationType weak = MUHAssosiationType_weak;\
+__unused MUHAssosiationType strong = MUHAssosiationTypeStrong;\
+__unused MUHAssosiationType assign = MUHAssosiationTypeAssign;\
+__unused MUHAssosiationType copy = MUHAssosiationTypeCopy;\
+__unused MUHAssosiationType weak = MUHAssosiationTypeWeak;\
 mm;\
 })
 

@@ -16,27 +16,27 @@ typedef id(^PackageBlock)(void);
 - (void)muh_setAssosiationObject:(id)object forKey:(NSString *)key type:(MUHAssosiationType)type {
     PackageBlock block;
     switch (type) {
-        case MUHAssosiationType_strong: {
+        case MUHAssosiationTypeStrong: {
             block = ^id() {
                 return object;
             };
             break;
         }
-        case MUHAssosiationType_copy: {
+        case MUHAssosiationTypeCopy: {
             object = [object copy];
             block = ^id() {
                 return object;
             };
             break;
         }
-        case MUHAssosiationType_assign: {
+        case MUHAssosiationTypeAssign: {
             __unsafe_unretained id blockObj = object;
             block = ^id() {
                 return blockObj;
             };
             break;
         }
-        case MUHAssosiationType_weak: {
+        case MUHAssosiationTypeWeak: {
             __weak id blockObj = object;
             block = ^id() {
                 return blockObj;
