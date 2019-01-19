@@ -1,5 +1,11 @@
 # MUHook
 
+
+[![CI Status](https://img.shields.io/travis/Magic-Unique/MUHook.svg?style=flat)](https://travis-ci.org/Magic-Unique/MUHook)
+[![Version](https://img.shields.io/cocoapods/v/MUHook.svg?style=flat)](https://cocoapods.org/pods/MUHook)
+[![License](https://img.shields.io/cocoapods/l/MUHook.svg?style=flat)](https://cocoapods.org/pods/MUHook)
+[![Platform](https://img.shields.io/cocoapods/p/MUHook.svg?style=flat)](https://cocoapods.org/pods/MUHook)
+
 A **powerful**, **quickly**, **light-weight** hooking tool on iOS device without jailbreak.
 
 在非越狱 iOS 平台上的强大的、快速的、轻量级 Hook 工具。
