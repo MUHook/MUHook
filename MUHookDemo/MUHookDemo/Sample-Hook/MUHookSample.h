@@ -10,4 +10,4 @@
 #import "MUHook.h"
 #import "MUHookClass.h"
 
-void MUHInitClass(MUHookClass);
+void MUHInitClass(MUHookClass)(void);

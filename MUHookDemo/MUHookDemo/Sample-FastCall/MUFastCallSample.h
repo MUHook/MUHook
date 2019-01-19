@@ -10,4 +10,4 @@
 #import "MUFastCallClass.h"
 #import "MUHook.h"
 
-void fastCall();
+void fastCall(void);

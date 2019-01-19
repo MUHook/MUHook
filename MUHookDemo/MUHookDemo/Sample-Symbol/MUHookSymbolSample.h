@@ -8,4 +8,4 @@
 
 #import <Foundation/Foundation.h>
 
-void initMUHookSymbolSample();
+void initMUHookSymbolSample(void);

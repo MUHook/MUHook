@@ -11,6 +11,12 @@
 
 @interface MUExtendsSubClass : MUExtendsSuperClass
 
+@property (nonatomic, copy) NSString *name;
+
+@property (nonatomic, assign) NSUInteger age;
+
+@property (nonatomic, assign) NSRect frame;
+
 @end
 
-void MUHInitClass(MUExtendsSubClass);
+void MUHInitClass(MUExtendsSubClass)(void);

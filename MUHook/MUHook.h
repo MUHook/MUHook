@@ -12,6 +12,7 @@
 #import "MUHRuntime.h"
 #import "NSObject+MUHook.h"
 #import "MUHMember.h"
+#import "MUClassCreator.h"
 
 #if DEBUG == 1
 

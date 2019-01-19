@@ -28,14 +28,18 @@ int main(int argc, const char * argv[]) {
         MUHAsct(obj, name, strong) = @"hh";
         NSLog(@"%@", MUHAsct(obj, name, strong));
         
-        MUHInitClass(MUExtendsSubClass);
+        MUHInitClass(MUExtendsSubClass)();
         MUExtendsSubClass *subInstance = MUHAllocInitWith(MUExtendsSubClass, init);
         [subInstance superVoidMethodWithObject:[NSObject new]];
         [subInstance superReturnValueMethod];
+        subInstance.name = @"name";
+        subInstance.age = 12;
+        subInstance.frame = NSMakeRect(1, 2, 3, 4);
+        NSLog(@"test subclass ivar: %@ %@ %@", subInstance.name, @(subInstance.age), NSStringFromRect(subInstance.frame));
 
         fastCall();
 
-        MUHInitClass(MUHookClass);
+        MUHInitClass(MUHookClass)();
         MUHookClass *hookInstance = MUHSendClassMsg(MUHookClass, instanceWithInt:0 object:nil);
         [hookInstance voidMethodWithObject:@"aaa"];
         [hookInstance returnValueMethod];

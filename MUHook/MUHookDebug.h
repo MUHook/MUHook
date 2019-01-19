@@ -24,7 +24,7 @@
 
 #define MUHAllocInitWith(c, init)               [MUHAlloc(c) init]
 
-#define MUHInitClass(c)                         init_##c ()
+#define MUHInitClass(c)                         init_##c
 
 #pragma mark - Implementation
 
@@ -41,8 +41,11 @@ __unused static returnType (*_unique_objc_ori$##c##$##name)   ( __strong const C
 __unused static returnType   _unique_objc_new$##c##$##name    ( __strong const Class self, SEL _cmd, ##args )
 
 #define MUHSymbolImplementation(symbol, returnType, args...) \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wstrict-prototypes\"") \
 __unused static returnType (*_unique_symbol_ori$##symbol)(args); \
-__unused static returnType   _unique_symbol_new$##symbol (args)
+__unused static returnType   _unique_symbol_new$##symbol (args) \
+_Pragma("clang diagnostic pop")
 
 #pragma mark - Execute Orig or Super
 
@@ -64,7 +67,7 @@ __unused static returnType   _unique_symbol_new$##symbol (args)
 
 #pragma mark - Create
 
-#define MUHCreateClass(c, sc) {(c *)0x0;(sc *)0x0;}MUCreateClass(#c, #sc)
+//#define MUHCreateClass(c, sc) {(c *)0x0;(sc *)0x0;}MUCreateClass(#c, #sc)
 
 #define MUHAddInstanceMethod(c, name, sel, encode) \
 {(c *)0x0;(void)name;}MUAddInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
