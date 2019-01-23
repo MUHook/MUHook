@@ -57,14 +57,13 @@ void MUHInitClass(MUExtendsSubClass)(void) {
         MUHAddIvar(NSUInteger, _age);
         MUHAddIvar(CGRect, _frame);
     };
-    MUHAddClassMethod(MUExtendsSubClass, subInstance, superInstanceWithInt:object:, @@:q@);
-    MUHAddInstanceMethod(MUExtendsSubClass, voidMethod, superVoidMethodWithObject:, v@:@);
-    MUHAddInstanceMethod(MUExtendsSubClass, returnMethod, superReturnValueMethod, @@:);
-    
-    MUHAddInstanceMethod(MUExtendsSubClass, setName, setName:, v@:@);
-    MUHAddInstanceMethod(MUExtendsSubClass, getName, name, @@:);
-    MUHAddInstanceMethod(MUExtendsSubClass, setAge, setAge:, v@:Q);
-    MUHAddInstanceMethod(MUExtendsSubClass, getAge, age, Q@:);
-    MUHAddInstanceMethod(MUExtendsSubClass, setFrame, setFrame:, v@:{CGRect={CGPoint=dd}{CGSize=dd}});
-    MUHAddInstanceMethod(MUExtendsSubClass, getFrame, frame, {CGRect={CGPoint=dd}{CGSize=dd}}@:);
+    MUHAddClassMethod(MUExtendsSubClass, subInstance, id, superInstanceWithInt:object:, NSInteger, id);
+    MUHAddInstanceMethod(MUExtendsSubClass, voidMethod, void, superVoidMethodWithObject:, id);
+    MUHAddInstanceMethod(MUExtendsSubClass, returnMethod, id, superReturnValueMethod);
+    MUHAddInstanceMethod(MUExtendsSubClass, setName, void, setName:, NSString *);
+    MUHAddInstanceMethod(MUExtendsSubClass, getName, NSString *, name);
+    MUHAddInstanceMethod(MUExtendsSubClass, setAge, void, setAge:, NSUInteger);
+    MUHAddInstanceMethod(MUExtendsSubClass, getAge, NSUInteger, age);
+    MUHAddInstanceMethod(MUExtendsSubClass, setFrame, void, setFrame:, CGRect);
+    MUHAddInstanceMethod(MUExtendsSubClass, getFrame, CGRect, frame);
 }

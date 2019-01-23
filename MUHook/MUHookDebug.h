@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MUHookMacro.h"
 
 #if DEBUG == 1
 
@@ -18,6 +19,9 @@
 
 #define _MUHClass(c)                            ((Class)(((c *)0x0), objc_getClass(#c)))
 #define MUHClass(c)                             _MUHClass(c)
+
+#define _MUHMetaClass(c)                        ((Class)(((c *)0x0), objc_getMetaClass(#c)))
+#define MUHMetaClass(c)                         _MUHMetaClass(c)
 
 #define MUHSendClassMsg(c, factory)             [MUHClass(c) factory]
 
@@ -78,12 +82,12 @@ _Pragma("clang diagnostic pop")
 
 #pragma mark - Create
 
-#define _MUHAddInstanceMethod(c, name, sel, encode) \
-{(c *)0x0;(void)name;}MUAddInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
-#define MUHAddInstanceMethod(c, name, sel, encode) _MUHAddInstanceMethod(c, name, sel, encode)
+#define _MUHAddInstanceMethod(c, name, ret, sel, args...) \
+{(c *)0x0;(void)name;}MUAddInstanceMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, id, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
+#define MUHAddInstanceMethod(c, name, ret, sel, args...) _MUHAddInstanceMethod(c, name, ret, sel, ##args)
 
-#define _MUHAddClassMethod(c, name, sel, encode) \
-{(c *)0x0;(void)name;}MUAddClassMessageEx(objc_getMetaClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, #encode , (IMP*)&_unique_objc_ori$##c##$##name)
-#define MUHAddClassMethod(c, name, sel, encode) _MUHAddClassMethod(c, name, sel, encode)
+#define _MUHAddClassMethod(c, name, ret, sel, args...) \
+{(c *)0x0;(void)name;}MUAddClassMessageEx(MUHMetaClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, Class, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
+#define MUHAddClassMethod(c, name, ret, sel, args...) _MUHAddClassMethod(c, name, ret, sel, ##args)
 
 #endif

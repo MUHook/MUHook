@@ -72,6 +72,8 @@
 		7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUHookRelease.m; sourceTree = "<group>"; };
 		7E81B7E521E0B61800DF85F6 /* MUClassCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUClassCreator.h; sourceTree = "<group>"; };
 		7E81B7E621E0B61800DF85F6 /* MUClassCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUClassCreator.m; sourceTree = "<group>"; };
+		7EC7BF6621F83B1F000792F9 /* MUHookMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookMacro.h; sourceTree = "<group>"; };
+		7EFFB2C121F8116600FA4C28 /* MUHookMetaMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookMetaMacro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,8 @@
 			children = (
 				6D8F56091E7FAA8500D34651 /* MUHook.h */,
 				6D8F560A1E7FAA8500D34651 /* MUHook.m */,
+				7EC7BF6621F83B1F000792F9 /* MUHookMacro.h */,
+				7EFFB2C121F8116600FA4C28 /* MUHookMetaMacro.h */,
 				7E81B7E521E0B61800DF85F6 /* MUClassCreator.h */,
 				7E81B7E621E0B61800DF85F6 /* MUClassCreator.m */,
 				7E31AC8E21D4731300AAF3F8 /* MUHookDebug.h */,

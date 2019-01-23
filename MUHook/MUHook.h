@@ -38,9 +38,9 @@ void MUHookInstanceMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 
 void MUHookClassMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 
-void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
+void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result);
 
-void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result);
+void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result);
 
 Class MUAllocateClassPair(Class superClass, const char *className, size_t extraBytes);
 

@@ -35,8 +35,8 @@ void MUHookClassMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
 	MUHookInstanceMessageEx(object_getClass(_class), sel, imp, result);
 }
 
-void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result) {
-    if (class_addMethod(_class, sel, imp, typeEncoding)) {
+void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result) {
+    if (class_addMethod(_class, sel, imp, typeEncoding.UTF8String)) {
         Class superClass = class_getSuperclass(_class);
         Method ori_method = class_getInstanceMethod(superClass, sel);
         *result = ori_method ? method_getImplementation(ori_method) : NULL;
@@ -47,7 +47,7 @@ void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, const char *typeEnco
     }
 }
 
-void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, const char *typeEncoding, IMP *result) {
+void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result) {
 	MUAddInstanceMessageEx(object_getClass(_class), sel, imp, typeEncoding, result);
 }
 

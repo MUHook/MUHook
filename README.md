@@ -1,6 +1,5 @@
 # MUHook
 
-
 [![CI Status](https://img.shields.io/travis/Magic-Unique/MUHook.svg?style=flat)](https://travis-ci.org/Magic-Unique/MUHook)
 [![Version](https://img.shields.io/cocoapods/v/MUHook.svg?style=flat)](https://cocoapods.org/pods/MUHook)
 [![License](https://img.shields.io/cocoapods/l/MUHook.svg?style=flat)](https://cocoapods.org/pods/MUHook)
@@ -14,9 +13,10 @@ A **powerful**, **quickly**, **light-weight** hooking tool on iOS device without
 
 1. Hook methods of ObjC class. Hook一个二进制文件中的类的对象方法
 2. Create subclass extends ObjC class. 创建一个二进制文件中的类的子类
-	* 新增或重写方法
-	* 新增实例变量
-	* 新增属性
+	* Add or override method 新增或重写方法
+	* Add ivar 新增实例变量
+	* Add property 新增属性
+	* Quick method encoding 快速方法编码
 3. Create instances of the classes in binary file, 创建一个二进制文件中的类的对象
 4. Send message to class in binary file. 向二进制文件中的类发消息（工厂方法）
 5. Support code hinting in Xcode.	支持 Xcode 的代码提示
@@ -224,9 +224,14 @@ void MUHInitClass(MUExtendsSubClass) {
     	MUHAddIvar(CGRect, _frame);
     };
     
-    MUHAddClassMethod(MUExtendsSubClass, subInstance, superInstanceWithInt:object:, @@:q@);
-    MUHAddInstanceMethod(MUExtendsSubClass, voidMethod, superVoidMethodWithObject:, v@:@);
-    MUHAddInstanceMethod(MUExtendsSubClass, returnMethod, superReturnValueMethod, @@:);
+    /*
+     *	MUHAddMethod
+     * ClassName, ImplementationName, return type, selector, [argument type list]
+     * 类名, 实现体名, 返回值类型, selector, [参数类型列表]
+     **/
+    MUHAddClassMethod(MUExtendsSubClass, subInstance, id, superInstanceWithInt:object:, NSInteger, id);
+    MUHAddInstanceMethod(MUExtendsSubClass, voidMethod, void, superVoidMethodWithObject:, id);
+    MUHAddInstanceMethod(MUExtendsSubClass, returnMethod, id, superReturnValueMethod);
 }
 ```
 
