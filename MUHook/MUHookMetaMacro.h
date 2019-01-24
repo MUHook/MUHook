@@ -6,6 +6,9 @@
 //  Copyright Magic-Unique 2017
 //
 
+#ifndef MUHookMetaMacro_h
+#define MUHookMetaMacro_h
+
 /**
  * Executes one or more expressions (which may have a void type, such as a call
  * to a function that returns no value) and always returns true.
@@ -659,3 +662,5 @@ muhmacro_if_eq(0, 1)(true)(false)
 #define muhmacro_drop18(...) muhmacro_drop17(muhmacro_tail(__VA_ARGS__))
 #define muhmacro_drop19(...) muhmacro_drop18(muhmacro_tail(__VA_ARGS__))
 #define muhmacro_drop20(...) muhmacro_drop19(muhmacro_tail(__VA_ARGS__))
+
+#endif /* MUHookMetaMacro_h */

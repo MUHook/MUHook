@@ -64,16 +64,16 @@ _Pragma("clang diagnostic pop")
 #define MUHSuper(c, name, args...)              _MUHSuper(c, name, ##args)
 
 #define _MUHSymbolOrig(symbol, args...)         ((void)&symbol,_unique_symbol_ori$##symbol(args))
-#define MUHSymbolOrig(symbol, args...)         _MUHSymbolOrig(symbol, ##args)
+#define MUHSymbolOrig(symbol, args...)          _MUHSymbolOrig(symbol, ##args)
 
 #pragma mark - Hook
 
 #define _MUHHookInstanceMessage(c, name, sel) \
-{(c *)0x0;(void)name;}MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
+{(c *)0x0;(void)name;}MUHookMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
 #define MUHHookInstanceMessage(c, name, sel) _MUHHookInstanceMessage(c, name, sel)
 
 #define _MUHHookClassMessage(c, name, sel) \
-{(c *)0x0;(void)name;}MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
+{(c *)0x0;(void)name;}MUHookMessageEx(MUHMetaClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name);
 #define MUHHookClassMessage(c, name, sel) _MUHHookClassMessage(c, name, sel)
 
 #define _MUHHookSymbolFunction(symbol) \
@@ -83,11 +83,11 @@ _Pragma("clang diagnostic pop")
 #pragma mark - Create
 
 #define _MUHAddInstanceMethod(c, name, ret, sel, args...) \
-{(c *)0x0;(void)name;}MUAddInstanceMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, id, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
+{(c *)0x0;(void)name;}MUAddMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, id, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
 #define MUHAddInstanceMethod(c, name, ret, sel, args...) _MUHAddInstanceMethod(c, name, ret, sel, ##args)
 
 #define _MUHAddClassMethod(c, name, ret, sel, args...) \
-{(c *)0x0;(void)name;}MUAddClassMessageEx(MUHMetaClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, Class, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
+{(c *)0x0;(void)name;}MUAddMessageEx(MUHMetaClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, Class, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
 #define MUHAddClassMethod(c, name, ret, sel, args...) _MUHAddClassMethod(c, name, ret, sel, ##args)
 
 #endif

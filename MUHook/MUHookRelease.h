@@ -66,11 +66,11 @@ _Pragma("clang diagnostic pop")
 #pragma mark - Hook
 
 #define _MUHHookInstanceMessage(c, name, sel) \
-MUHookInstanceMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name)
+MUHookMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name)
 #define MUHHookInstanceMessage(c, name, sel) _MUHHookInstanceMessage(c, name, sel)
 
 #define _MUHHookClassMessage(c, name, sel) \
-MUHookClassMessageEx(objc_getClass( #c ), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name)
+MUHookMessageEx(MUHMetaClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, (IMP*)&_unique_objc_ori$##c##$##name)
 #define MUHHookClassMessage(c, name, sel) _MUHHookClassMessage(c, name, sel)
 
 #define _MUHHookSymbolFunction(symbol) \
@@ -80,11 +80,11 @@ MURebindSymbol(#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori
 #pragma mark - Create
 
 #define _MUHAddInstanceMethod(c, name, ret, sel, args...) \
-MUAddInstanceMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, id, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
+MUAddMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, id, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
 #define MUHAddInstanceMethod(c, name, ret, sel, args...) _MUHAddInstanceMethod(c, name, ret, sel, ##args)
 
 #define _MUHAddClassMethod(c, name, ret, sel, args...) \
-MUAddClassMessageEx(MUHMetaClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, Class, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
+MUAddMessageEx(MUHMetaClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, Class, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
 #define MUHAddClassMethod(c, name, ret, sel, args...) _MUHAddClassMethod(c, name, ret, sel, ##args)
 
 #endif

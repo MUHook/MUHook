@@ -32,18 +32,8 @@
 
 #pragma mark - Function
 
-Class MUCreateClass(const char *className, const char *superClass);
+void MUHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 
-void MUHookInstanceMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
-
-void MUHookClassMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
-
-void MUAddInstanceMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result);
-
-void MUAddClassMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result);
-
-Class MUAllocateClassPair(Class superClass, const char *className, size_t extraBytes);
-
-void MURegisterClassPair(Class _class);
+void MUAddMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result);
 
 int MURebindSymbol(const char *symbol, void *imp, void **result);
