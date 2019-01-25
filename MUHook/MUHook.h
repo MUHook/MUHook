@@ -13,6 +13,7 @@
 #import "NSObject+MUHook.h"
 #import "MUHMember.h"
 #import "MUClassCreator.h"
+#import "MUPropertyCreator.h"
 
 #if DEBUG == 1
 

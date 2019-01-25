@@ -43,13 +43,7 @@ MUHInstanceImplementation(MUExtendsSubClass, getAge, NSUInteger) {
     return [MUHSelfIvar(_age) unsignedIntegerValue];
 }
 
-MUHInstanceImplementation(MUExtendsSubClass, setFrame, void, CGRect frame) {
-    MUHSelfIvar(_frame) = [NSValue valueWithRect:frame];
-}
-
-MUHInstanceImplementation(MUExtendsSubClass, getFrame, CGRect) {
-    return [(NSValue *)MUHSelfIvar(_frame) rectValue];
-}
+MUHPropertyImplementation(MUExtendsSubClass, strong, NSString *, nickName);
 
 void MUHInitClass(MUExtendsSubClass)(void) {
     MUHCreateClass(MUExtendsSubClass, MUExtendsSuperClass) withIvarList {
@@ -60,10 +54,28 @@ void MUHInitClass(MUExtendsSubClass)(void) {
     MUHAddClassMethod(MUExtendsSubClass, subInstance, id, superInstanceWithInt:object:, NSInteger, id);
     MUHAddInstanceMethod(MUExtendsSubClass, voidMethod, void, superVoidMethodWithObject:, id);
     MUHAddInstanceMethod(MUExtendsSubClass, returnMethod, id, superReturnValueMethod);
+    
+    //  Add property - 添加属性
+    
+    //  Method 1: for normal, support base type, struct and object, custom with association-object and ivar. support readonly
+    //  方法 1：支持基本数据类型、结构体、对象，支持自定义 ivar 或者关联对象。代码多，灵活度高，可只读
+    //  Usage with MUHInstanceImplementation()
     MUHAddInstanceMethod(MUExtendsSubClass, setName, void, setName:, NSString *);
     MUHAddInstanceMethod(MUExtendsSubClass, getName, NSString *, name);
     MUHAddInstanceMethod(MUExtendsSubClass, setAge, void, setAge:, NSUInteger);
     MUHAddInstanceMethod(MUExtendsSubClass, getAge, NSUInteger, age);
-    MUHAddInstanceMethod(MUExtendsSubClass, setFrame, void, setFrame:, CGRect);
-    MUHAddInstanceMethod(MUExtendsSubClass, getFrame, CGRect, frame);
+    
+    //  Method 2: for struct, custom with association-object or ivar. manual transform it in getter and setter. support readonly
+    //  方法 2：支持基本数据类型、结构体、对象，支持自定义 ivar 或者关联对象，非对象需要自己转换，代码中等，灵活度中等，可只读
+    MUHAddPropertyGetter(MUExtendsSubClass, CGRect, frame, frame) {
+        return [(NSValue *)MUHSelfIvar(_frame) rectValue];
+    };
+    MUHAddPropertySetter(MUExtendsSubClass, CGRect, frame, setFrame:) {
+        MUHSelfIvar(_frame) = [NSValue valueWithRect:frame];
+    };
+    
+    //  Method 3: for object, only support association-object with strong,copy,weak,assign. unsupport readonly
+    //  方法 3：仅支持对象，仅支持关联对象，代码少、灵活度低，不可只读
+    //  Usage with MUHPropertyImplementation()
+    MUHAddProperty(MUExtendsSubClass, NSString *, nickName, setNickName:, nickName);
 }

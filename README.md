@@ -197,6 +197,10 @@ MUHInstanceImplementation(MUExtendsSubClass, returnMethod, id) {
     return returnValue;
 }
 
+//	Define a property with setter and getter implementation
+//	@property (nonatomic, strong) NSObject *name;
+MUHPropertyImplementation(MUExtendsSubClass, strong, NSObject *, name);
+
 void MUHInitClass(MUExtendsSubClass) {
 	/**
 	 * PS: When you call MUHCreateClass(), it will call createClass() and registerClassPair().
@@ -232,6 +236,71 @@ void MUHInitClass(MUExtendsSubClass) {
     MUHAddClassMethod(MUExtendsSubClass, subInstance, id, superInstanceWithInt:object:, NSInteger, id);
     MUHAddInstanceMethod(MUExtendsSubClass, voidMethod, void, superVoidMethodWithObject:, id);
     MUHAddInstanceMethod(MUExtendsSubClass, returnMethod, id, superReturnValueMethod);
+    /**
+     *	MUHAddProperty
+     * ClassName, PropertyType, PropertyName, Setter, Getter
+     */
+    MUHAddProperty(MUExtendsSubClass, NSObject *, name, setName:, name);
+}
+```
+
+**See more: MUHookDemo/Sample-Extends**
+
+## Usage - Add Property 添加属性
+
+```objc
+// Method 1: add `NSString *name` and `NSUInteger age`
+// Method 2: add `CGRect frame`
+// Method 3: add `NSString *nickName`
+
+//	Method 1: for normal, define setter and getter implementation
+//	方法1，自己实现 setter 和 getter 的方法体
+MUHInstanceImplementation(MUExtendsSubClass, setName, void, NSString *name) {
+    MUHSelfIvar(_name) = [name copy];
+}
+
+MUHInstanceImplementation(MUExtendsSubClass, getName, NSString *) {
+    return MUHSelfIvar(_name);
+}
+
+MUHInstanceImplementation(MUExtendsSubClass, setAge, void, NSUInteger age) {
+    MUHSelfIvar(_age) = @(age);
+}
+
+MUHInstanceImplementation(MUExtendsSubClass, getAge, NSUInteger) {
+    return [MUHSelfIvar(_age) unsignedIntegerValue];
+}
+
+//	Method 3: for object, define property implementation
+//	方法3，直接实现一个 property 的实现体
+MUHPropertyImplementation(MUExtendsSubClass, strong, NSString *, nickName);
+
+void MUHMain() {
+    //  Add property - 添加属性
+    
+    //  Method 1: for normal, support base type, struct and object, custom with association-object and ivar. support readonly
+    //  方法 1：支持基本数据类型、结构体、对象，支持自定义 ivar 或者关联对象。代码多，灵活度高，可只读
+    //  Usage with MUHInstanceImplementation()
+    MUHAddInstanceMethod(MUExtendsSubClass, setName, void, setName:, NSString *);
+    MUHAddInstanceMethod(MUExtendsSubClass, getName, NSString *, name);
+    MUHAddInstanceMethod(MUExtendsSubClass, setAge, void, setAge:, NSUInteger);
+    MUHAddInstanceMethod(MUExtendsSubClass, getAge, NSUInteger, age);
+    
+    //  Method 2: for struct, custom with association-object or ivar. manual transform it in getter and setter. support readonly
+    //  方法 2：支持基本数据类型、结构体、对象，支持自定义 ivar 或者关联对象，非对象需要自己转换，代码中等，灵活度中等，可只读
+    MUHAddPropertyGetter(MUExtendsSubClass, CGRect, frame, frame) {
+		//	Can not use `_cmd` in this method
+		return [(NSValue *)MUHSelfIvar(_frame) rectValue];
+    };
+    MUHAddPropertySetter(MUExtendsSubClass, CGRect, frame, setFrame:) {
+		//	Can not use `_cmd` in this method
+		MUHSelfIvar(_frame) = [NSValue valueWithRect:frame];
+    };
+    
+    //  Method 3: for object, only support association-object with strong,copy,weak,assign. unsupport readonly
+    //  方法 3：仅支持对象，仅支持关联对象，代码少、灵活度低，不可只读
+    //  Usage with MUHPropertyImplementation()
+    MUHAddProperty(MUExtendsSubClass, NSString *, nickName, setNickName:, nickName);
 }
 ```
 

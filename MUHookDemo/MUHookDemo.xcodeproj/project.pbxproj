@@ -23,6 +23,7 @@
 		7E31AC9021D4731300AAF3F8 /* MUHookDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E31AC8F21D4731300AAF3F8 /* MUHookDebug.m */; };
 		7E31AC9321D4731F00AAF3F8 /* MUHookRelease.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */; };
 		7E81B7E721E0B61800DF85F6 /* MUClassCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E81B7E621E0B61800DF85F6 /* MUClassCreator.m */; };
+		7ECE815821FAD92400045349 /* MUPropertyCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE815721FAD92400045349 /* MUPropertyCreator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +74,8 @@
 		7E81B7E521E0B61800DF85F6 /* MUClassCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUClassCreator.h; sourceTree = "<group>"; };
 		7E81B7E621E0B61800DF85F6 /* MUClassCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUClassCreator.m; sourceTree = "<group>"; };
 		7EC7BF6621F83B1F000792F9 /* MUHookMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookMacro.h; sourceTree = "<group>"; };
+		7ECE815621FAD92400045349 /* MUPropertyCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUPropertyCreator.h; sourceTree = "<group>"; };
+		7ECE815721FAD92400045349 /* MUPropertyCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUPropertyCreator.m; sourceTree = "<group>"; };
 		7EFFB2C121F8116600FA4C28 /* MUHookMetaMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookMetaMacro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +137,8 @@
 				7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */,
 				7E2735DD21A855F000971EE6 /* MUHMember.h */,
 				7E2735DE21A855F000971EE6 /* MUHMember.m */,
+				7ECE815621FAD92400045349 /* MUPropertyCreator.h */,
+				7ECE815721FAD92400045349 /* MUPropertyCreator.m */,
 				6DCD87E3208459450061B78D /* NSObject+MUHook.h */,
 				6DCD87E4208459450061B78D /* NSObject+MUHook.m */,
 				6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */,
@@ -254,6 +259,7 @@
 			files = (
 				7E29B2DF1F42C42400E1F5D6 /* MUExtendsSubClass.m in Sources */,
 				7E29B2E91F42CBA300E1F5D6 /* MUHookClass.m in Sources */,
+				7ECE815821FAD92400045349 /* MUPropertyCreator.m in Sources */,
 				6DCD87E5208459450061B78D /* NSObject+MUHook.m in Sources */,
 				7E81B7E721E0B61800DF85F6 /* MUClassCreator.m in Sources */,
 				7E2735DF21A855F000971EE6 /* MUHMember.m in Sources */,

@@ -17,6 +17,8 @@
 
 @property (nonatomic, assign) NSRect frame;
 
+@property (nonatomic, strong) NSString *nickName;
+
 @end
 
 void MUHInitClass(MUExtendsSubClass)(void);

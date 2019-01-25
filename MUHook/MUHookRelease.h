@@ -34,6 +34,15 @@
 
 #pragma mark - Implementation
 
+#define _MUHPropertyImplementation(c, mm, type, name)\
+MUHInstanceImplementation(c, get_##name, type) {\
+    return MUHSelfAsct(name, mm);\
+}\
+MUHInstanceImplementation(c, set_##name, void, type name) {\
+    MUHSelfAsct(name, mm) = name;\
+}
+#define MUHPropertyImplementation(c, mm, type, name) _MUHPropertyImplementation(c, mm, type, name)
+
 #define _MUHInstanceImplementation(c, name, returnType, args...) \
 __unused static returnType (*_unique_objc_ori$##c##$##name)   ( c * self, SEL _cmd, ##args ); \
 __unused static returnType   _unique_objc_new$##c##$##name    ( c * self, SEL _cmd, ##args )
@@ -78,6 +87,11 @@ MURebindSymbol(#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori
 #define MUHHookSymbolFunction(symbol) _MUHHookSymbolFunction(symbol)
 
 #pragma mark - Create
+
+#define _MUHAddProperty(c, type, name, setter, getter) \
+MUHAddInstanceMethod(c, set_##name, void, setter, type);\
+MUHAddInstanceMethod(c, get_##name, type, getter);
+#define MUHAddProperty(c, type, name, setter, getter) _MUHAddProperty(c, type, name, setter, getter)
 
 #define _MUHAddInstanceMethod(c, name, ret, sel, args...) \
 MUAddMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, id, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
