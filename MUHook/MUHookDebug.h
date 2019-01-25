@@ -95,16 +95,16 @@ _Pragma("clang diagnostic pop")
 
 #define _MUHAddProperty(c, type, name, setter, getter) \
 {(void *)name;}\
-MUHAddInstanceMethod(c, set_##name, void, setter, type);\
-MUHAddInstanceMethod(c, get_##name, type, getter);
+MUHAddInstanceMessage(c, set_##name, void, setter, type);\
+MUHAddInstanceMessage(c, get_##name, type, getter);
 #define MUHAddProperty(c, type, name, setter, getter) _MUHAddProperty(c, type, name, setter, getter)
 
-#define _MUHAddInstanceMethod(c, name, ret, sel, args...) \
+#define _MUHAddInstanceMessage(c, name, ret, sel, args...) \
 {(c *)0x0;(void)name;}MUAddMessageEx(MUHClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, id, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
-#define MUHAddInstanceMethod(c, name, ret, sel, args...) _MUHAddInstanceMethod(c, name, ret, sel, ##args)
+#define MUHAddInstanceMessage(c, name, ret, sel, args...) _MUHAddInstanceMessage(c, name, ret, sel, ##args)
 
-#define _MUHAddClassMethod(c, name, ret, sel, args...) \
+#define _MUHAddClassMessage(c, name, ret, sel, args...) \
 {(c *)0x0;(void)name;}MUAddMessageEx(MUHMetaClass(c), @selector(sel), (IMP)&_unique_objc_new$##c##$##name, MUHEncode(ret, Class, SEL, ##args), (IMP*)&_unique_objc_ori$##c##$##name)
-#define MUHAddClassMethod(c, name, ret, sel, args...) _MUHAddClassMethod(c, name, ret, sel, ##args)
+#define MUHAddClassMessage(c, name, ret, sel, args...) _MUHAddClassMessage(c, name, ret, sel, ##args)
 
 #endif
