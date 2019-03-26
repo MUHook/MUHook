@@ -1,12 +1,12 @@
 PODS:
-  - MUHook (1.5.0):
-    - MUHook/Base (= 1.5.0)
-    - MUHook/ObjC (= 1.5.0)
-    - MUHook/Symbol (= 1.5.0)
-  - MUHook/Base (1.5.0)
-  - MUHook/ObjC (1.5.0):
+  - MUHook (1.6.0):
+    - MUHook/Base (= 1.6.0)
+    - MUHook/ObjC (= 1.6.0)
+    - MUHook/Symbol (= 1.6.0)
+  - MUHook/Base (1.6.0)
+  - MUHook/ObjC (1.6.0):
     - MUHook/Base
-  - MUHook/Symbol (1.5.0):
+  - MUHook/Symbol (1.6.0):
     - MUHook/Base
 
 DEPENDENCIES:
@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  MUHook: f4317dc5420eb97076cb413bb06660fb84931977
+  MUHook: b28bae464a0b24952f922283138a84337cb6be0e
 
 PODFILE CHECKSUM: 7aa08e8cfecd6fc1a2c883b52d5605934cd3b011
 
