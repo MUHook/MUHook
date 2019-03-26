@@ -7,7 +7,7 @@
 //
 
 #import "MUHookSymbolSample.h"
-#import "MUHook.h"
+#import <MUHook/MUSymbol.h>
 
 MUHSymbolImplementation(malloc, void *, size_t size) {
     printf("malloc(%lu)\n", size);

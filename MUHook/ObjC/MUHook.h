@@ -36,5 +36,3 @@
 void MUHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 
 void MUAddMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result);
-
-int MURebindSymbol(const char *symbol, void *imp, void **result);

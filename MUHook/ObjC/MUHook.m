@@ -35,7 +35,3 @@ void MUAddMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP 
         method_setImplementation(ori_method, imp);
     }
 }
-
-int MURebindSymbol(const char *symbol, void *imp, void **result) {
-    return rebind_symbols((struct rebinding[1]){{symbol, imp, (void *)result}}, 1);
-}

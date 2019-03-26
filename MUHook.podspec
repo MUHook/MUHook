@@ -24,8 +24,10 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  #s.description  = <<-DESC
-  #                 DESC
+  s.description  = <<-DESC
+  MUHook/ObjC: Hook, create subclass, quick operaion for ObjC
+  MUHook/C   : Hook c function with fishhook.
+  DESC
 
   s.homepage     = "https://github.com/Magic-Unique/MUHook"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -71,7 +73,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
-  s.ios.deployment_target = '6.0'
+  # s.ios.deployment_target = '6.0'
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -79,7 +81,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/Magic-Unique/MUHook.git", :tag => "#{s.version}", :branch => "master" }
+  s.source       = { :git => "https://github.com/Magic-Unique/MUHook.git", :tag => "#{s.version}"}
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -90,7 +92,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "MUHook/**/*.{h,m}"
+  # s.source_files  = "MUHook/**/*.{h,m}"
   #s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -129,9 +131,26 @@ Pod::Spec.new do |s|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-  # s.requires_arc = true
+  s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "fishhook", "~> 0.2"
+
+  s.subspec 'Base' do |ss|
+    ss.source_files = "MUHook/Base/*.{h}"
+  end
+
+  s.subspec 'ObjC' do |ss|
+    ss.source_files = "MUHook/ObjC/*.{h,m}"
+    ss.osx.deployment_target = "10.8"
+    ss.ios.deployment_target = '6.0'
+    ss.dependency "MUHook/Base"
+  end
+
+  s.subspec 'Symbol' do |ss|
+    ss.source_files = "MUHook/Symbol/*.{h,m,c}"
+    ss.osx.deployment_target = "10.8"
+    ss.ios.deployment_target = '6.0'
+    ss.dependency "MUHook/Base"
+  end
 
 end

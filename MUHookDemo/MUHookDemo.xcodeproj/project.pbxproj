@@ -7,23 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1898BDB3EEA74291C15794 /* libPods-MUHookDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6C80C4C0C9FB61406762F7 /* libPods-MUHookDemo.a */; };
 		6D8F55FC1E7F7BC500D34651 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F55FB1E7F7BC500D34651 /* main.m */; };
 		6D8F56081E7F806800D34651 /* MUClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F56071E7F806800D34651 /* MUClass.m */; };
-		6D8F560B1E7FAA8500D34651 /* MUHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8F560A1E7FAA8500D34651 /* MUHook.m */; };
-		6DCD87E5208459450061B78D /* NSObject+MUHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DCD87E4208459450061B78D /* NSObject+MUHook.m */; };
 		6DEEC9B72083ADEF006B6194 /* MUHookSymbolSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEEC9B62083ADEF006B6194 /* MUHookSymbolSample.m */; };
-		7E114D7020BC06EC0083DB24 /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E114D6F20BC06EC0083DB24 /* fishhook.c */; };
-		7E2735DF21A855F000971EE6 /* MUHMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2735DE21A855F000971EE6 /* MUHMember.m */; };
 		7E29B2DC1F42C1F900E1F5D6 /* MUExtendsSuperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2DB1F42C1F900E1F5D6 /* MUExtendsSuperClass.m */; };
 		7E29B2DF1F42C42400E1F5D6 /* MUExtendsSubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2DE1F42C42400E1F5D6 /* MUExtendsSubClass.m */; };
 		7E29B2E31F42C73300E1F5D6 /* MUFastCallClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2E21F42C73300E1F5D6 /* MUFastCallClass.m */; };
 		7E29B2E61F42C79E00E1F5D6 /* MUFastCallSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2E51F42C79E00E1F5D6 /* MUFastCallSample.m */; };
 		7E29B2E91F42CBA300E1F5D6 /* MUHookClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2E81F42CBA300E1F5D6 /* MUHookClass.m */; };
 		7E29B2EC1F42CBEF00E1F5D6 /* MUHookSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E29B2EB1F42CBEF00E1F5D6 /* MUHookSample.m */; };
-		7E31AC9021D4731300AAF3F8 /* MUHookDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E31AC8F21D4731300AAF3F8 /* MUHookDebug.m */; };
-		7E31AC9321D4731F00AAF3F8 /* MUHookRelease.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */; };
-		7E81B7E721E0B61800DF85F6 /* MUClassCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E81B7E621E0B61800DF85F6 /* MUClassCreator.m */; };
-		7ECE815821FAD92400045349 /* MUPropertyCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE815721FAD92400045349 /* MUPropertyCreator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,21 +32,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		402043C65776972210C27A5D /* Pods-MUHookDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MUHookDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MUHookDemo/Pods-MUHookDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		6D8F55F81E7F7BC500D34651 /* MUHookDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MUHookDemo; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8F55FB1E7F7BC500D34651 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6D8F56061E7F806800D34651 /* MUClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUClass.h; sourceTree = "<group>"; };
 		6D8F56071E7F806800D34651 /* MUClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUClass.m; sourceTree = "<group>"; };
-		6D8F56091E7FAA8500D34651 /* MUHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHook.h; path = ../MUHook/MUHook.h; sourceTree = SOURCE_ROOT; };
-		6D8F560A1E7FAA8500D34651 /* MUHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUHook.m; path = ../MUHook/MUHook.m; sourceTree = SOURCE_ROOT; };
-		6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUHRuntime.h; path = ../MUHook/MUHRuntime.h; sourceTree = SOURCE_ROOT; };
-		6DCD87E3208459450061B78D /* NSObject+MUHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+MUHook.h"; sourceTree = "<group>"; };
-		6DCD87E4208459450061B78D /* NSObject+MUHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MUHook.m"; sourceTree = "<group>"; };
 		6DEEC9B52083ADEF006B6194 /* MUHookSymbolSample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookSymbolSample.h; sourceTree = "<group>"; };
 		6DEEC9B62083ADEF006B6194 /* MUHookSymbolSample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUHookSymbolSample.m; sourceTree = "<group>"; };
-		7E114D6E20BC06EC0083DB24 /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
-		7E114D6F20BC06EC0083DB24 /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
-		7E2735DD21A855F000971EE6 /* MUHMember.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHMember.h; sourceTree = "<group>"; };
-		7E2735DE21A855F000971EE6 /* MUHMember.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUHMember.m; sourceTree = "<group>"; };
 		7E29B2DA1F42C1F900E1F5D6 /* MUExtendsSuperClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUExtendsSuperClass.h; sourceTree = "<group>"; };
 		7E29B2DB1F42C1F900E1F5D6 /* MUExtendsSuperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUExtendsSuperClass.m; sourceTree = "<group>"; };
 		7E29B2DD1F42C42400E1F5D6 /* MUExtendsSubClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUExtendsSubClass.h; sourceTree = "<group>"; };
@@ -67,16 +52,8 @@
 		7E29B2E81F42CBA300E1F5D6 /* MUHookClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUHookClass.m; sourceTree = "<group>"; };
 		7E29B2EA1F42CBEF00E1F5D6 /* MUHookSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUHookSample.h; sourceTree = "<group>"; };
 		7E29B2EB1F42CBEF00E1F5D6 /* MUHookSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUHookSample.m; sourceTree = "<group>"; };
-		7E31AC8E21D4731300AAF3F8 /* MUHookDebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookDebug.h; sourceTree = "<group>"; };
-		7E31AC8F21D4731300AAF3F8 /* MUHookDebug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUHookDebug.m; sourceTree = "<group>"; };
-		7E31AC9121D4731F00AAF3F8 /* MUHookRelease.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookRelease.h; sourceTree = "<group>"; };
-		7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUHookRelease.m; sourceTree = "<group>"; };
-		7E81B7E521E0B61800DF85F6 /* MUClassCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUClassCreator.h; sourceTree = "<group>"; };
-		7E81B7E621E0B61800DF85F6 /* MUClassCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUClassCreator.m; sourceTree = "<group>"; };
-		7EC7BF6621F83B1F000792F9 /* MUHookMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookMacro.h; sourceTree = "<group>"; };
-		7ECE815621FAD92400045349 /* MUPropertyCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUPropertyCreator.h; sourceTree = "<group>"; };
-		7ECE815721FAD92400045349 /* MUPropertyCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MUPropertyCreator.m; sourceTree = "<group>"; };
-		7EFFB2C121F8116600FA4C28 /* MUHookMetaMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MUHookMetaMacro.h; sourceTree = "<group>"; };
+		CF6C80C4C0C9FB61406762F7 /* libPods-MUHookDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MUHookDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1C20C77FD13446CB8D5B9B1 /* Pods-MUHookDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MUHookDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MUHookDemo/Pods-MUHookDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,19 +61,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E1898BDB3EEA74291C15794 /* libPods-MUHookDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22904B3109A0D8DC714BCD0E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				402043C65776972210C27A5D /* Pods-MUHookDemo.debug.xcconfig */,
+				F1C20C77FD13446CB8D5B9B1 /* Pods-MUHookDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6D8F55EF1E7F7BC500D34651 = {
 			isa = PBXGroup;
 			children = (
-				7E114D6D20BC06CE0083DB24 /* fishhook */,
-				6D8F56021E7F7C2500D34651 /* MUHook */,
 				6D8F55FA1E7F7BC500D34651 /* MUHookDemo */,
 				6D8F55F91E7F7BC500D34651 /* Products */,
+				22904B3109A0D8DC714BCD0E /* Pods */,
+				7B8BB15A3059DD201F243ACE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,31 +109,6 @@
 			path = MUHookDemo;
 			sourceTree = "<group>";
 		};
-		6D8F56021E7F7C2500D34651 /* MUHook */ = {
-			isa = PBXGroup;
-			children = (
-				6D8F56091E7FAA8500D34651 /* MUHook.h */,
-				6D8F560A1E7FAA8500D34651 /* MUHook.m */,
-				7EC7BF6621F83B1F000792F9 /* MUHookMacro.h */,
-				7EFFB2C121F8116600FA4C28 /* MUHookMetaMacro.h */,
-				7E81B7E521E0B61800DF85F6 /* MUClassCreator.h */,
-				7E81B7E621E0B61800DF85F6 /* MUClassCreator.m */,
-				7E31AC8E21D4731300AAF3F8 /* MUHookDebug.h */,
-				7E31AC8F21D4731300AAF3F8 /* MUHookDebug.m */,
-				7E31AC9121D4731F00AAF3F8 /* MUHookRelease.h */,
-				7E31AC9221D4731F00AAF3F8 /* MUHookRelease.m */,
-				7E2735DD21A855F000971EE6 /* MUHMember.h */,
-				7E2735DE21A855F000971EE6 /* MUHMember.m */,
-				7ECE815621FAD92400045349 /* MUPropertyCreator.h */,
-				7ECE815721FAD92400045349 /* MUPropertyCreator.m */,
-				6DCD87E3208459450061B78D /* NSObject+MUHook.h */,
-				6DCD87E4208459450061B78D /* NSObject+MUHook.m */,
-				6DA3FBAF1E8CB431001B6A0B /* MUHRuntime.h */,
-			);
-			name = MUHook;
-			path = ../MUHook;
-			sourceTree = "<group>";
-		};
 		6DEEC9B42083ADCC006B6194 /* Sample-Symbol */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,14 +118,12 @@
 			path = "Sample-Symbol";
 			sourceTree = "<group>";
 		};
-		7E114D6D20BC06CE0083DB24 /* fishhook */ = {
+		7B8BB15A3059DD201F243ACE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7E114D6F20BC06EC0083DB24 /* fishhook.c */,
-				7E114D6E20BC06EC0083DB24 /* fishhook.h */,
+				CF6C80C4C0C9FB61406762F7 /* libPods-MUHookDemo.a */,
 			);
-			name = fishhook;
-			path = ../fishhook;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7E29B2D71F42C1B400E1F5D6 /* Sample-Extends */ = {
@@ -207,6 +167,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D8F55FF1E7F7BC500D34651 /* Build configuration list for PBXNativeTarget "MUHookDemo" */;
 			buildPhases = (
+				E27B1DEA59BF0265BF3CD342 /* [CP] Check Pods Manifest.lock */,
 				6D8F55F41E7F7BC500D34651 /* Sources */,
 				6D8F55F51E7F7BC500D34651 /* Frameworks */,
 				6D8F55F61E7F7BC500D34651 /* CopyFiles */,
@@ -252,6 +213,31 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E27B1DEA59BF0265BF3CD342 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MUHookDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6D8F55F41E7F7BC500D34651 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -259,20 +245,12 @@
 			files = (
 				7E29B2DF1F42C42400E1F5D6 /* MUExtendsSubClass.m in Sources */,
 				7E29B2E91F42CBA300E1F5D6 /* MUHookClass.m in Sources */,
-				7ECE815821FAD92400045349 /* MUPropertyCreator.m in Sources */,
-				6DCD87E5208459450061B78D /* NSObject+MUHook.m in Sources */,
-				7E81B7E721E0B61800DF85F6 /* MUClassCreator.m in Sources */,
-				7E2735DF21A855F000971EE6 /* MUHMember.m in Sources */,
-				6D8F560B1E7FAA8500D34651 /* MUHook.m in Sources */,
 				6D8F56081E7F806800D34651 /* MUClass.m in Sources */,
-				7E31AC9021D4731300AAF3F8 /* MUHookDebug.m in Sources */,
 				7E29B2EC1F42CBEF00E1F5D6 /* MUHookSample.m in Sources */,
 				7E29B2DC1F42C1F900E1F5D6 /* MUExtendsSuperClass.m in Sources */,
 				7E29B2E31F42C73300E1F5D6 /* MUFastCallClass.m in Sources */,
 				6DEEC9B72083ADEF006B6194 /* MUHookSymbolSample.m in Sources */,
 				6D8F55FC1E7F7BC500D34651 /* main.m in Sources */,
-				7E114D7020BC06EC0083DB24 /* fishhook.c in Sources */,
-				7E31AC9321D4731F00AAF3F8 /* MUHookRelease.m in Sources */,
 				7E29B2E61F42C79E00E1F5D6 /* MUFastCallSample.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,6 +363,7 @@
 		};
 		6D8F56001E7F7BC500D34651 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 402043C65776972210C27A5D /* Pods-MUHookDemo.debug.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -392,6 +371,7 @@
 		};
 		6D8F56011E7F7BC500D34651 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F1C20C77FD13446CB8D5B9B1 /* Pods-MUHookDemo.release.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
