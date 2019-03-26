@@ -1,13 +1,11 @@
 //
-//  MUHook.m
+//  MUObjC.m
+//  MUHook
 //
-//  Created by Magic-Unique on 2017/2/9.
-//
-//  Copyright Magic-Unique 2017
+//  Created by Magic-Unique on 2019/3/26.
 //
 
-#import "MUHook.h"
-#import "fishhook.h"
+#import "MUObjC.h"
 
 void MUHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result) {
     Method ori_method = class_getInstanceMethod(_class, sel);

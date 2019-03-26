@@ -2,10 +2,12 @@
 //  MUSymbol+Release.h
 //  MUHookDemo
 //
-//  Created by 吴双 on 2019/3/26.
+//  Created by Magic-Unique on 2019/3/26.
 //  Copyright © 2019 unique. All rights reserved.
 //
 
+#if DEBUG == 1
+#else
 
 #define _MUHSymbolImplementation(symbol, returnType, args...) \
 _Pragma("clang diagnostic push") \
@@ -21,3 +23,5 @@ _Pragma("clang diagnostic pop")
 #define _MUHHookSymbolFunction(symbol) \
 MURebindSymbol(#symbol, _unique_symbol_new$##symbol, (void *)&_unique_symbol_ori$##symbol)
 #define MUHHookSymbolFunction(symbol) _MUHHookSymbolFunction(symbol)
+
+#endif

@@ -1,9 +1,8 @@
 //
-//  MUHook.h
+//  MUObjC.h
+//  MUHook
 //
-//  Created by Magic-Unique on 2017/2/9.
-//
-//  Copyright Magic-Unique 2017
+//  Created by Magic-Unique on 2019/3/26.
 //
 
 #import <Foundation/Foundation.h>
@@ -20,14 +19,14 @@
 /*
  In Debug mode, MUHook will import more define and code to support Xcode-Code-Tips
  */
-#import "MUHookDebug.h"
+#import "MUObjC+Debug.h"
 
 #else
 
 /*
  In Release mode, Use minimum code to improve performance but without Xcode-Code-Tips
  */
-#import "MUHookRelease.h"
+#import "MUObjC+Release.h"
 
 #endif
 
@@ -36,3 +35,8 @@
 void MUHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 
 void MUAddMessageEx(Class _class, SEL sel, IMP imp, NSString *typeEncoding, IMP *result);
+
+@interface MUObjC : NSObject
+
+@end
+
