@@ -12,6 +12,53 @@
 @interface _MUHIvarMember : MUHMember @end
 @interface _MUHAssociationMember : MUHMember @end
 
+typedef id(^PackageBlock)(void);
+
+void MUSetAssociatedObject(id object, NSString *key, id value, MUHAssociationType type) {
+    PackageBlock block;
+    switch (type) {
+            case MUHAssociationType_strong: {
+                block = ^id() {
+                    return value;
+                };
+                break;
+            }
+            case MUHAssociationType_copy: {
+                value = [value copy];
+                block = ^id() {
+                    return value;
+                };
+                break;
+            }
+            case MUHAssociationType_assign: {
+                __unsafe_unretained id blockObj = value;
+                block = ^id() {
+                    return blockObj;
+                };
+                break;
+            }
+            case MUHAssociationType_weak: {
+                __weak id blockObj = value;
+                block = ^id() {
+                    return blockObj;
+                };
+                break;
+            }
+        default:
+            break;
+    }
+    objc_setAssociatedObject(object, (const void *)key.hash, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+id MUGetAssociatedObject(id object, NSString *key) {
+    PackageBlock block = objc_getAssociatedObject(object, (const void *)key.hash);
+    if (block) {
+        return block();
+    } else {
+        return nil;
+    }
+}
+
 @implementation MUHMember
 
 + (MUHMember *)_ivar {
@@ -31,7 +78,7 @@
     return self;
 }
 
-- (MUHMember *)_asct:(MUHAssosiationType)type {
+- (MUHMember *)_asct:(MUHAssociationType)type {
     return self;
 }
 
@@ -57,20 +104,20 @@
 @end
 
 @implementation _MUHAssociationMember {
-    MUHAssosiationType _type;
+    MUHAssociationType _type;
 }
 
-- (MUHMember *)_asct:(MUHAssosiationType)type {
+- (MUHMember *)_asct:(MUHAssociationType)type {
     _type = type;
     return [super _asct:type];
 }
 
 - (id)objectForKeyedSubscript:(NSString *)key {
-    return [self.object muh_getAssosiationForKey:key];
+    return MUGetAssociatedObject(self.object, key);
 }
 
 - (void)setObject:(id)obj forKeyedSubscript:(NSString *)key {
-    [self.object muh_setAssosiationObject:obj forKey:key type:_type];
+    MUSetAssociatedObject(self.object, key, obj, _type);
 }
 
 @end

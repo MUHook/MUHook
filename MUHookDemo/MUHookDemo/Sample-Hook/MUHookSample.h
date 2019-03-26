@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MUHook.h"
+#import <MUHook/MUHook.h>
 #import "MUHookClass.h"
 
 void MUHInitClass(MUHookClass)(void);

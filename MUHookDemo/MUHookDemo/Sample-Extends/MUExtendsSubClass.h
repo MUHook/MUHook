@@ -7,7 +7,7 @@
 //
 
 #import "MUExtendsSuperClass.h"
-#import "MUHook.h"
+#import <MUHook/MUHook.h>
 
 @interface MUExtendsSubClass : MUExtendsSuperClass
 

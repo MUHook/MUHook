@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MUFastCallClass.h"
-#import "MUHook.h"
+#import <MUHook/MUHook.h>
 
 void fastCall(void);

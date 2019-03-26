@@ -7,7 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSObject+MUHook.h"
+
+typedef NS_ENUM(NSUInteger, MUHAssociationType) {
+    MUHAssociationType_strong,
+    MUHAssociationType_assign,
+    MUHAssociationType_copy,
+    MUHAssociationType_weak,
+};
+
+#if DEBUG == 1
+
+#define _MUHAsctType(mm) ({\
+__unused MUHAssociationType strong = MUHAssociationType_strong;\
+__unused MUHAssociationType assign = MUHAssociationType_assign;\
+__unused MUHAssociationType copy = MUHAssociationType_copy;\
+__unused MUHAssociationType weak = MUHAssociationType_weak;\
+mm;\
+})
+
+#else
+
+#define _MUHAsctType(mm) (MUHAssociationType_##mm)
+
+#endif
 
 #define MUHIvar(obj, key)       [[MUHMember _ivar] _obj:obj][@#key]
 #define MUHSelfIvar(key)        [[MUHMember _ivar] _obj:self][@#key]
@@ -25,7 +47,7 @@
 - (MUHMember *)_obj:(id)object;
 - (MUHMember *)_sel:(SEL)selector;
 
-- (MUHMember *)_asct:(MUHAssosiationType)type;
+- (MUHMember *)_asct:(MUHAssociationType)type;
 
 - (id)objectForKeyedSubscript:(NSString *)key;
 
