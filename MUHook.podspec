@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "MUHook"
-  s.version      = "1.6.0"
+  s.version      = "1.7.0"
   s.summary      = "A powerful, quickly, light-weight hooking tool on iOS device without jailbreak."
 
   # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   MUHook/C   : Hook c function with fishhook.
   DESC
 
-  s.homepage     = "https://github.com/Magic-Unique/MUHook"
+  s.homepage     = "https://github.com/MUHook/MUHook"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -81,7 +81,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/Magic-Unique/MUHook.git", :tag => "#{s.version}"}
+  s.source       = { :git => "https://github.com/MUHook/MUHook.git", :tag => "#{s.version}"}
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
